@@ -1,0 +1,23 @@
+Serviços RMI (das empresas): ao iniciar o servidor a lista de trechos disponíveis será lida de um arquivo e armazenado em uma estrutura de dados.  
+	* Serviços de acesso remoto:
+	1- Pegar trechos.
+	2- Setar nova quantidade de vagas disponíveis (atualizar estrutura de dados e arquivo de dados quando algum cliente finalizar uma compra de passagem.)
+	3- Consultar quantidades de vagas disponíveis em um trecho.
+
+Aplicação do cliente:
+	Passos do processo de compra:
+	1 - Escolher a companhia 	
+	2 - Escolha de origem e destino.
+	3 - Mostrar tabela com possibilidades de trechos que levam ao destino desejado.
+	4 - Decidir (verificação exclusão mútua ou posse e espera)
+	5 - Confirmação.
+
+Servidor/Cliente RMI: 
+	Ações:
+	1 - Gerar grafo geral (apartir dos trechos disponíveis em cada companhia).
+	2 - Buscar rotas disponíveis apartir de uma origem e destino.
+	3 - Modificar remotamente a quantidade de vagas para um trecho depois de finalizado uma compra.
+	4 - Informar confirmação de compra de uma passagem para o servidor RMI de uma empresa e para o cliente.
+	5 - Gerenciar o uso do grafo geral pelos clientes.
+	6 - Atualizar grafo (caso um servidor).
+ 
