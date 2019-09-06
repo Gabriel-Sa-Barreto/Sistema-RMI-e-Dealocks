@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.io.Serializable;
+
 /**
  * Classe responsavel por guardar a rota
  */
@@ -13,7 +15,7 @@ package model;
  *
  * @author lsjsa
  */
-public class Rotas {
+public class Rotas implements Serializable{
     
     /**
      * Atributo que armazena o local onde o trajeto começa

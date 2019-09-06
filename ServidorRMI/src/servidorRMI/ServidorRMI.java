@@ -16,8 +16,6 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Rotas;
 
 /**
@@ -36,43 +34,77 @@ public class ServidorRMI extends UnicastRemoteObject implements Servico {
         super();
     }
     
+    /**
+     * Metodo que pega todas as rotas que estao no arquivo
+     * @return
+     * @throws RemoteException , IOException
+     */
     @Override
     public List<Rotas> lerRotas() throws RemoteException , IOException{
-        String caminhoArquivo = "../Trajeto/trajeto.txt";
+        String caminhoArquivo = "../Trajeto/trajeto.txt"; //diretorio onde esta o arquivo que armazena os trajetos
         //objeto responsavel por ler as linhas do arquivo
-        BufferedReader read = new BufferedReader(new FileReader(caminhoArquivo));
+        BufferedReader read = new BufferedReader(new FileReader(caminhoArquivo)); 
         String linha = "";
+        //faz a leitura da primeira linha do arquivo que contem o nome da companhia
         String companhia;
         companhia = read.readLine();
+        //leitura dos trajetos
         while((linha = read.readLine()) != null){
+            //dados separados por "-" 
             String split[] = linha.split("-");
+            //criacao de uma rota
             Rotas rota =  new Rotas(split[0],split[1],Integer.valueOf(split[2]),companhia);
+            //adiciona na lista
             trajetos.add(rota);
         }
+        //retorna a lista
         return trajetos;
     }
-
+    
+     /**
+     * Metodo que altera a quantidade de passagens em um trajeto
+     * @param origem
+     * @param destino
+     * @param quantidade
+     * @throws RemoteException 
+     */
     @Override
     public void mudarQuantidadeDePassagens(String origem, String destino, int quantidade) throws RemoteException {
+        //for com iterados para andar na lista para a procura da rota especifica para alterar um dado do trajeto
         for(Iterator<Rotas> iter= trajetos.iterator();((Iterator<Rotas>) iter).hasNext();){
             Rotas verificar = iter.next();
+            //if que procura a rota
             if(verificar.getOrigem().equals(origem) && verificar.getDestino().equals(destino)){
-                verificar.setQuantidade(quantidade);
+                verificar.setQuantidade(quantidade);//altera a quantidade de vagas disponiveis
             }
         }
     }
-
+    
+    /**
+     * Metodo que consulta a quantidade de passagens em um trajeto
+     * @param origem
+     * @param destino
+     * @return
+     * @throws RemoteException 
+     */
     @Override
     public int consultarQuantidadeDePassagens(String origem, String destino) throws RemoteException {
+        //for com iterados para andar na lista para a procura da rota especifica
         for(Iterator<Rotas> iter= trajetos.iterator();((Iterator<Rotas>) iter).hasNext();){
             Rotas verificar = iter.next();
+            //if que procura a rota
             if(verificar.getOrigem().equals(origem) && verificar.getDestino().equals(destino)){
-                return verificar.getQuantidade();
+                return verificar.getQuantidade();//retorna a quantidade de vagas 
             }
         }
         return 0;
     }
-
+    
+    /**
+     * Metodo que retorna a lista que já foi lida do arquivo
+     * @return
+     * @throws RemoteException 
+     */
     @Override
     public List<Rotas> getRotas() throws RemoteException {
         return trajetos;
