@@ -14,7 +14,7 @@ import model.Rotas;
  *
  * @author lsjsa
  */
-public interface Servico {
+public interface Servico extends Remote{
     /**
      * Metodo que pega todas as rotas que estao no arquivo
      * @return
