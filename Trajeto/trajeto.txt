@@ -33,7 +33,7 @@ Curitiba-Natal-9
 São Paulo-Porto Alegre-0
 São Paulo-Florianopolis-12
 Rio Janeiro-Curitiba-4
-Florianopolis- Vitoria-1
+Florianopolis-Vitoria-1
 Belo Horizonte-Porto Alegre-2
 Belo Horizonte-Rio Janeiro-2
 Belo Horizonte-Palmas-3

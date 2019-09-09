@@ -7,8 +7,11 @@ package servidorRMI;
 import java.io.IOException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import model.Rotas;
+import util.Grafo;
 /**
  *
  * @author lsjsa
@@ -32,10 +35,24 @@ public class ClienteRMI {
      public static void main(String[] args) throws IOException {
          ClienteRMI cliente = new ClienteRMI();
          trajetos = servico.lerRotas();
-         trajetos.forEach(u -> System.out.println(u.getOrigem() + "-" + u.getDestino() + "-" + u.getCompanhia()));
-         System.out.println(servico.consultarQuantidadeDePassagens("Terezina","Natal"));
+         Grafo grafo = new Grafo();
+         //pega todas as rotas e coloca no grafo
+         for(Iterator<Rotas> iter= trajetos.iterator();((Iterator<Rotas>) iter).hasNext();){
+             Rotas verificar = iter.next();
+             String origem = verificar.getOrigem(); //pega o destino do trajeto
+             String destino = verificar.getDestino();//pega a origem do trajeto
+             if(grafo.existeVertice(origem) == -1) //verifica se já existe o vertice pertencente a origem
+                 grafo.addVertice(origem);
+             if(grafo.existeVertice(destino) == -1) //verifica se já existe o vertice pertencente o destino
+                 grafo.addVertice(destino);
+             if(grafo.existeAresta(verificar.getOrigem(),verificar.getDestino()) == -1) //caso não exista uma aresta com esse destino e origem
+                 grafo.addAresta(origem,destino,verificar.getQuantidade());//adiciona nova aresta
+         }
+         
+         grafo.buscarCaminhos("Salvador", "Natal");
+         /*System.out.println(servico.consultarQuantidadeDePassagens("Terezina","Natal"));
          servico.mudarQuantidadeDePassagens("Terezina","Natal",15);
-         System.out.println(servico.consultarQuantidadeDePassagens("Terezina","Natal"));
+         System.out.println(servico.consultarQuantidadeDePassagens("Terezina","Natal"));*/
      }
     
 }
