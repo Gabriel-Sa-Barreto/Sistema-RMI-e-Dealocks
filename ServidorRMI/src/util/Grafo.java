@@ -194,27 +194,31 @@ public class Grafo implements GrafoInterface {
     }
     
     private void auxBuscaCaminho(String origem , String destino , boolean[] visitou, int[] path , int path_index){
-        int index_origem = existeVertice(origem);
-        //System.out.println(index_origem + origem);
-        int index_destino = existeVertice(destino);
+        int index_origem = existeVertice(origem); //indice da origem do trajeto
+        int index_destino = existeVertice(destino); //indice do destino do trajeto
         //System.out.println(index_destino + destino);
-        visitou[index_origem] = true;
-        path[path_index] = index_origem;
-        path_index++;
+        visitou[index_origem] = true; // coloca que visitou onde esta saindo
+        path[path_index] = index_origem; //coloca no vetor que guarda o caminho
+        path_index++;   //incrementa para poder adicionar no vetor de caminho
         
+        //condicao de parada
         if(index_origem == index_destino){
+            //mostra o caminho pego pelo algoritmo
             for(int i = 0; i < path_index; i++){
                 System.out.println("c:" + listVertices.get(path[i]).getNome());
             }
         }
         else{
             try{
+                //pega todos os vizinhos da origem
                 ArrayList<Aresta> vizinhos = listAdjacencia(origem);
                 if(!vizinhos.isEmpty()){
+                    //percorre todo os vizinhos recursivamente todos os vizinhos
                     for(Iterator<Aresta> iter= vizinhos.iterator();((Iterator<Aresta>) iter).hasNext();){
                         Aresta adjacente = (Aresta) iter.next();
-                        int next = adjacente.getVert().getVertice();
+                        int next = adjacente.getVert().getVertice(); //pega o indice do vertice
                         if(!visitou[next]){
+                            //chama o metodo recursivamente
                             auxBuscaCaminho(adjacente.getVert().getNome(), destino , visitou , path, path_index);
                         }    
                     }
