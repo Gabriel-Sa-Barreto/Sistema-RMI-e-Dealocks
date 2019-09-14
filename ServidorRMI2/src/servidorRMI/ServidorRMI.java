@@ -43,7 +43,7 @@ public class ServidorRMI extends UnicastRemoteObject implements Servico {
      */
     @Override
     public List<Rotas> lerRotas() throws RemoteException , IOException{
-        String caminhoArquivo = "../Trajeto/trajeto.txt"; //diretorio onde esta o arquivo que armazena os trajetos
+        String caminhoArquivo = "../Trajeto/trajeto2.txt"; //diretorio onde esta o arquivo que armazena os trajetos
         //objeto responsavel por ler as linhas do arquivo
         BufferedReader read = new BufferedReader(new FileReader(caminhoArquivo)); 
         String linha = "";
@@ -123,8 +123,7 @@ public class ServidorRMI extends UnicastRemoteObject implements Servico {
             LocateRegistry.createRegistry(1099);
             //string que deve conter o endereco onde o serviço está sendo
             //disponibilizado e o nome do serviço
-            String localizacao = "//192.168.25.9/1099";
-            System.out.println("Teste");
+            String localizacao = "//192.168.25.9/1099";//mudar ip
             //Servico servico = (Servico) UnicastRemoteObject.exportObject(servidor, 0);
             //System.out.println("Teste2");
             //Registra nosso servidor e o serviço que está sendo disponibilizado.

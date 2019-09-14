@@ -56,12 +56,12 @@ public class TrataCliente implements Runnable{
             String split[] = acao.split(";");
             opcode = ControllerPacotes.strToInt(split[0],0); //conversão para inteiro do campo de OpCode. 
             switch(acao){
-                case 1: //1- Recebimento de origem e destino enviado pelo usuário.
+                case "1": //1- Recebimento de origem e destino enviado pelo usuário.
                     //enviar para o cliente todas as possibilidades de rotas
                     //na aplicação do usuário, realizar o tratamento de trechos repetidos na hora de apresentar a ele.
                    
                     break;
-                case 2: //Recebimento do trajeto escolhido pelo cliente.
+                case "2": //Recebimento do trajeto escolhido pelo cliente.
                     
                     break;
                 default:
