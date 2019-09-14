@@ -5,7 +5,9 @@
  */
 package servidorRMI;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -15,6 +17,8 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Rotas;
 
 /**
@@ -60,6 +64,7 @@ public class ServidorRMI extends UnicastRemoteObject implements Servico {
             trajetos.add(rota);
         }
         //retorna a lista
+        read.close();
         return trajetos;
     }
     
@@ -79,6 +84,12 @@ public class ServidorRMI extends UnicastRemoteObject implements Servico {
             if(verificar.getOrigem().equals(origem) && verificar.getDestino().equals(destino)){
                 verificar.setQuantidade(quantidade);//altera a quantidade de vagas disponiveis
             }
+        }
+        //atualizar o arquivo
+        try {
+            atualizar();
+        } catch (IOException ex) {
+            Logger.getLogger(ServidorRMI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -110,6 +121,25 @@ public class ServidorRMI extends UnicastRemoteObject implements Servico {
     @Override
     public List<Rotas> getRotas() throws RemoteException {
         return trajetos;
+    }
+    
+    /**
+     * Método que atualiza o arquivo
+     * @throws IOException 
+     */
+    public void atualizar() throws IOException{
+        //objeto responsavel por escrever as linhas do arquivo
+        String caminhoArquivo = "../Trajeto/trajeto.txt"; //diretorio onde esta o arquivo que armazena os trajetos
+        BufferedWriter write = new BufferedWriter(new FileWriter(caminhoArquivo,true));
+        //padrao definido para o armazenamento da informacao no arquivo
+        write.write(trajetos.get(0).getCompanhia() + "/n");
+        int i = 0;
+        //sobrescrever todos os trajetos com a atualizacao
+        while(i < trajetos.size()){
+            write.write(trajetos.get(i).getOrigem() + "-" + trajetos.get(i).getDestino() + "-" + trajetos.get(i).getQuantidade() + "/n");
+        }
+        //fechar o buffer de escrita
+        write.close();
     }
     
     /**
