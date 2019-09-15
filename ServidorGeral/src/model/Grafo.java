@@ -7,15 +7,11 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
-import java.util.Stack;
-import model.Rotas;
 
 /**
  * Classe que implementa uma estrutura de dados chamada grafos.
- * @author gabriel
+ * @author Samuel Vitorio Lima , Gabriel Sá e Daniel
  */
 public class Grafo implements GrafoInterface {
       
@@ -182,22 +178,23 @@ public class Grafo implements GrafoInterface {
     }
 
     @Override
-    public void buscarCaminhos(String origem, String destino) {
+    public List<String> buscarCaminhos(String origem, String destino) {
         boolean[] visitou = new boolean[numVertices()];
         int[] path = new int[numVertices()];
         int path_index = 0;
-           
+        List<String> rotasEncontradas = new ArrayList<String>();
         for(int i = 0; i < numVertices(); i++)
             visitou[i] = false;
         
-        auxBuscaCaminho(origem, destino, visitou, path, path_index);
+        auxBuscaCaminho(origem, destino, visitou, path, path_index, rotasEncontradas);
+        return rotasEncontradas;
     }
     
-    private void auxBuscaCaminho(String origem , String destino , boolean[] visitou, int[] path , int path_index){
+    private void auxBuscaCaminho(String origem , String destino , boolean[] visitou, int[] path , int path_index, List<String> rotasEncontradas){
         int index_origem = existeVertice(origem); //indice da origem do trajeto
         int index_destino = existeVertice(destino); //indice do destino do trajeto
-        List<String> rotas = new ArrayList<String>();
         //System.out.println(index_destino + destino);
+        String rota = "";
         visitou[index_origem] = true; // coloca que visitou onde esta saindo
         path[path_index] = index_origem; //coloca no vetor que guarda o caminho
         path_index++;   //incrementa para poder adicionar no vetor de caminho
@@ -206,8 +203,11 @@ public class Grafo implements GrafoInterface {
         if(index_origem == index_destino){
             //mostra o caminho pego pelo algoritmo
             for(int i = 0; i < path_index; i++){
-                System.out.println("c:" + listVertices.get(path[i]).getNome());
+                //System.out.println("c:" + listVertices.get(path[i]).getNome());
+                //armazena a rota encontrada.
+                rota = rota + listVertices.get(path[i]).getNome() + "-"; 
             }
+            rotasEncontradas.add(rota);
         }
         else{
             try{
@@ -220,7 +220,7 @@ public class Grafo implements GrafoInterface {
                         int next = adjacente.getVert().getVertice(); //pega o indice do vertice
                         if(!visitou[next]){
                             //chama o metodo recursivamente
-                            auxBuscaCaminho(adjacente.getVert().getNome(), destino , visitou , path, path_index);
+                            auxBuscaCaminho(adjacente.getVert().getNome(), destino , visitou , path, path_index, rotasEncontradas);
                         }    
                     }
                 } 

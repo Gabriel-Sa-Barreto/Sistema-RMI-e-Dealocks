@@ -13,7 +13,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author lsjsa
+ * @author Samuel Vitorio Lima , Gabriel Sá e Daniel
  */
 public class Rotas implements Serializable{
     

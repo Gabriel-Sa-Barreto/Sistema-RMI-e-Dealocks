@@ -26,7 +26,7 @@ public class Servidor implements Runnable {
        
     /**Atributo que guarda o PrintStream do cliente conectado com o servidor.
      */
-    private PrintStream cartorio;
+    private PrintStream userCliente;
     
     /**Construtor que inicializa os atributos da classe
      * @param porta  -parâmetro que informa a porta de conexão do servidor
@@ -65,7 +65,7 @@ public class Servidor implements Runnable {
             } catch (IOException ex) {
                System.out.println("Erro 2: " + ex);
             }
-            cartorio = ps;
+            userCliente = ps;
             // cria tratador de cliente numa nova thread
             TrataCliente tc = null;
             try {
@@ -84,7 +84,7 @@ public class Servidor implements Runnable {
      */
     public synchronized void distribuiMensagem(String msg) throws IOException {
         //envia msg para o cliente conectado. 
-        DataOutputStream saida = new DataOutputStream(cartorio);
+        DataOutputStream saida = new DataOutputStream(userCliente);
         saida.writeUTF(msg);
     }
 }

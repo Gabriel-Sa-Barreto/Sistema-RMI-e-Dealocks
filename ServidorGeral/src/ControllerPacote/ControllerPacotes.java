@@ -7,7 +7,7 @@ package ControllerPacote;
 
 /**
  *
- * @author Gabriel Sá e Samuel Vitorio
+ * @author Gabriel Sá, Samuel Vitorio e Daniel
  */
 public class ControllerPacotes {
     
@@ -24,10 +24,5 @@ public class ControllerPacotes {
         catch (NumberFormatException e) {  // Se houver erro na conversão, retorna o valor padrão
             return padrao;
         }
-    }
-    
-    
-    
-    
-    
+    }  
 }

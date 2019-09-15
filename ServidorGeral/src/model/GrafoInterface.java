@@ -6,6 +6,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Interface que define os métodos que um usuário poderá acessar da classe Grafo.
@@ -97,10 +98,11 @@ public interface GrafoInterface {
     
     /**
      * Método que procura por todos os caminhos possiveis a partir da origem para o destino
-     * @param vi
-     * @param v2 
+     * @param origem  - String
+     * @param destino - String
+     * @return  uma lista de rotas, no qual cada posição da lista é uma string com uma rota encontrada.
      */
-    public void buscarCaminhos(String origem , String destino);
+    public List<String> buscarCaminhos(String origem , String destino);
     
     
     
