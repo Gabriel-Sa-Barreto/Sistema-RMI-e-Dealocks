@@ -5,10 +5,14 @@
  */
 package controller;
 
+import java.io.IOException;
+import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import model.Grafo;
+import model.Rotas;
 import servidorRMI.Servico;
 
 /**
@@ -40,15 +44,59 @@ public class ControllerTrajeto {
     /**
      * Método que inicializa os objetos que serão usados para acessar 
      * os métodos remotos.
-     * @param s1 - Servico
-     * @param s2 - Servico
-     * @param s3 - Servico
      */
-    public void startServico(Servico s1, Servico s2, Servico s3){
-        servico1 = s1;
-        servico2 = s2;
-        servico3 = s3;
+    public static void startServico(){
+        try{
+            //string que deve conter o endereco onde o serviço está sendo
+            //disponibilizado e o nome do serviço
+            //servico da companhia1
+            servico1 = (Servico) Naming.lookup("//10.0.0.102/1099");
+        } catch(Exception ex){
+            System.out.println("Erro com algum serviço 1" + ex.getMessage());
+        }
+        
+        try{
+            //string que deve conter o endereco onde o serviço está sendo
+            //disponibilizado e o nome do serviço
+            servico2 = (Servico) Naming.lookup("//10.0.0.102/1099");
+        } catch(Exception ex){
+            System.out.println("Erro com algum serviço 2" + ex.getMessage());
+        }
+        
+        try{
+            //string que deve conter o endereco onde o serviço está sendo
+            //disponibilizado e o nome do serviço
+            servico3 = (Servico) Naming.lookup("//10.0.0.102/1099");
+        } catch(Exception ex){
+            System.out.println("Erro com algum serviço 3" + ex.getMessage());
+        }     
+        grafoDeRotas = new Grafo();
     }
+    
+    public static void construirGrafo(int opcao) throws IOException{
+        List<Rotas> trajetos = new ArrayList<Rotas>();
+        switch(opcao){
+            case 1: trajetos = servico1.lerRotas();
+                break;
+            case 2: trajetos = servico2.lerRotas();
+                break;
+            case 3: trajetos = servico3.lerRotas();
+                break;
+        }
+        //pega todas as rotas e coloca no grafo
+        for(Iterator<Rotas> iter= trajetos.iterator();((Iterator<Rotas>) iter).hasNext();){
+             Rotas verificar = iter.next();
+             String origem = verificar.getOrigem(); //pega o destino do trajeto
+             String destino = verificar.getDestino();//pega a origem do trajeto
+             if(grafoDeRotas.existeVertice(origem) == -1) //verifica se já existe o vertice pertencente a origem
+                 grafoDeRotas.addVertice(origem);
+             if(grafoDeRotas.existeVertice(destino) == -1) //verifica se já existe o vertice pertencente o destino
+                 grafoDeRotas.addVertice(destino);
+             if(grafoDeRotas.existeAresta(verificar.getOrigem(),verificar.getDestino()) == -1) //caso não exista uma aresta com esse destino e origem
+                 grafoDeRotas.addAresta(origem,destino,verificar.getQuantidade());//adiciona nova aresta
+         }
+    }
+    
     
     
     /**
@@ -145,11 +193,6 @@ public class ControllerTrajeto {
      */
     public synchronized static List<String> buscarRotas(String origem, String destino){
         List<String> rotas = grafoDeRotas.buscarCaminhos(origem, destino);
-        
-        for(Iterator<String> iter = rotas.iterator();((Iterator<String>) iter).hasNext();){
-            String foundRoute = iter.next();
-            System.out.println(foundRoute);
-        }
         return rotas;
-    } 
+    }     
 }

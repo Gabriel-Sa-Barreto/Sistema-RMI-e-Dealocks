@@ -5,6 +5,7 @@
  */
 package servidor;
 
+import controller.ControllerTrajeto;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -33,9 +34,11 @@ public class Servidor implements Runnable {
      * @throws java.io.IOException     
     */
     public Servidor (int porta) throws IOException{
-        this.porta = porta;       //Porta ao qual o servidor irá se associar.
+        this.porta = porta;                //Porta ao qual o servidor irá se associar.
         criarConexão();
-        new Thread(this).start(); //executa a thread do servidor 
+        new Thread(this).start();          //executa a thread do servidor
+        ControllerTrajeto.startServico();  //acessa os serviços disponíveis para construir um grafo de rotas.
+        ControllerTrajeto.construirGrafo(1);
     }
     
     /***Método que starta o servidor.

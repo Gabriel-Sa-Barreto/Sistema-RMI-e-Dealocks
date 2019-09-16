@@ -18,7 +18,7 @@ public class ControllerRotas {
      * Lista que armazena as possibilidades de rotas recebidas do servidor
      * apartir de uma origem e destino.
      */
-    private static List<String> rotas = new ArrayList<String>();
+    private static List<String> rotas;
     
     /**
      * Atributo que implementa a técnica de semáforo para o acesso à lista de rotas por parte
@@ -29,13 +29,20 @@ public class ControllerRotas {
     /**
      * Atributo que armazena a lista de trechos que estão indisponíveis.
      */
-    private static List<String> trechosIndisponiveis = new ArrayList<String>();
+    private static List<String> trechosIndisponiveis;
     
     /**
      * Atributo que implementa a técnica de semáforo para o acesso à lista de trechosIndisponiveis por parte
      * do cliente.
      */
     private static int semaforoNewTrechoFailed = 0;
+
+    public ControllerRotas() {
+        rotas = new ArrayList<String>();
+        trechosIndisponiveis = new ArrayList<String>();
+    }
+    
+    
     
     /**
      * Método que adiciona uma nova rota recebida pelo servidor.
@@ -58,6 +65,7 @@ public class ControllerRotas {
      * @return List
      */
     public static List<String> getRotas() {
+        rotas.forEach(u -> System.out.println("Rota: " + u.toString()));
         return rotas;
     }
 
@@ -117,5 +125,12 @@ public class ControllerRotas {
      */
     public static List<String> getTrechosIndisponiveis() {
         return trechosIndisponiveis;
+    }
+    
+    /**
+     * Método que limpa a lista de rotas enviadas pelo servidor.
+     */
+    public static void clearListRotas(){
+        rotas.clear();
     }
 }

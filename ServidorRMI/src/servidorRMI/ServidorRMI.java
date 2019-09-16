@@ -153,9 +153,8 @@ public class ServidorRMI extends UnicastRemoteObject implements Servico {
             LocateRegistry.createRegistry(1099);
             //string que deve conter o endereco onde o serviço está sendo
             //disponibilizado e o nome do serviço
-            String localizacao = "//192.168.25.9/1099";
-            System.out.println("Teste");
-            //Servico servico = (Servico) UnicastRemoteObject.exportObject(servidor, 0);
+            String localizacao = "//10.0.0.102/1099";
+            //System.setProperty("java.rmi.server.hostname", "10.0.0.123");
             //System.out.println("Teste2");
             //Registra nosso servidor e o serviço que está sendo disponibilizado.
             //Caso seja feita alguma modificação ele já remove a antiga instância,

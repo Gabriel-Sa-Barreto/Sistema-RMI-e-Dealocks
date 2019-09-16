@@ -205,7 +205,12 @@ public class Grafo implements GrafoInterface {
             for(int i = 0; i < path_index; i++){
                 //System.out.println("c:" + listVertices.get(path[i]).getNome());
                 //armazena a rota encontrada.
-                rota = rota + listVertices.get(path[i]).getNome() + "-"; 
+                if(i == (path_index-1) ){
+                    rota = rota + listVertices.get(path[i]).getNome();
+                }else{
+                    rota = rota + listVertices.get(path[i]).getNome() + "-";
+                }
+                System.out.println(rota);
             }
             rotasEncontradas.add(rota);
         }

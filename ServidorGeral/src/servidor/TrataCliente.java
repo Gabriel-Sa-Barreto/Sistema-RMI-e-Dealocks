@@ -69,18 +69,20 @@ public class TrataCliente implements Runnable{
                         String origem  = dados[1];
                         String destino = dados[2];
                         List<String> rotas = ControllerTrajeto.buscarRotas(origem, destino);
-
+                            
                         //Envia ao cliente todas as possibilidades de rotas apartir da origem e destino desejado.
                         //na aplicação do usuário, realizar o tratamento de trechos repetidos na hora de apresentar a ele.
                         String pacote = "";
                         for(Iterator<String> iter = rotas.iterator();((Iterator<String>) iter).hasNext();){
                             pacote = "1" + ";" + iter.next() + ";" + "1";
+                            System.out.println(pacote);
                             servidor.distribuiMensagem(pacote);
                         }
                         
                         //envia pacote de encerramento
                         pacote = "1" + ";" + "vazio" + ";" + "0";
                         servidor.distribuiMensagem(pacote);
+                         System.out.println(pacote);
                         break;
                     case 2: 
                         //Recebimento do trajeto escolhido pelo cliente.
