@@ -35,6 +35,7 @@ public class Inicio extends javax.swing.JFrame {
         initComponents();
         cont = new ControllerView();
         List<String> trajeto = cont.lerRotas();
+        new ControllerRotas();
         for (Iterator<String> iter = trajeto.iterator(); ((Iterator<String>) iter).hasNext();) {
            String add = iter.next();
            boxOrigem.addItem(add);
@@ -72,7 +73,7 @@ public class Inicio extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         lista = new javax.swing.JList<>();
         jScrollPane3 = new javax.swing.JScrollPane();
-        lista1 = new javax.swing.JList<>();
+        escolhidos = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         VoltarTelaInicial = new javax.swing.JButton();
@@ -196,8 +197,8 @@ public class Inicio extends javax.swing.JFrame {
         lista.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane2.setViewportView(lista);
 
-        lista1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jScrollPane3.setViewportView(lista1);
+        escolhidos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jScrollPane3.setViewportView(escolhidos);
 
         jLabel1.setText("Trechos Escolhidos");
 
@@ -218,30 +219,26 @@ public class Inicio extends javax.swing.JFrame {
                 .addGap(49, 49, 49)
                 .addGroup(escolherRotaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(escolherRotaLayout.createSequentialGroup()
-                        .addGroup(escolherRotaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(escolherRotaLayout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(81, 81, 81)
-                                .addComponent(titulo1)
-                                .addGap(84, 84, 84)
-                                .addComponent(jLabel1))
-                            .addGroup(escolherRotaLayout.createSequentialGroup()
-                                .addComponent(buttonTam, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(buttonGol, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(buttonAzul, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(escolherRotaLayout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel2)
+                        .addGap(81, 81, 81)
+                        .addComponent(titulo1)
+                        .addGap(84, 84, 84)
+                        .addComponent(jLabel1))
                     .addGroup(escolherRotaLayout.createSequentialGroup()
-                        .addComponent(buttonComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(buttonTam, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(buttonGol, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(buttonAzul, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(escolherRotaLayout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(buttonComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, escolherRotaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelIndisponivel, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+                .addComponent(labelIndisponivel, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
                 .addGap(104, 104, 104)
                 .addComponent(VoltarTelaInicial)
                 .addGap(55, 55, 55))
@@ -345,7 +342,7 @@ public class Inicio extends javax.swing.JFrame {
             }          
             //somente continua execução depois do recebimento de todas as rotas.            
             List<String> rotas = ControllerRotas.getRotas();
-            listaRotas.clear();
+            //listaRotas.clear();
             //pegar os trechos das rotas enviadas pelo servidor
             for (Iterator<String> iter = rotas.iterator(); ((Iterator<String>) iter).hasNext();) {
                 String rota = iter.next(); //pega uma rota
@@ -386,8 +383,13 @@ public class Inicio extends javax.swing.JFrame {
         String companhia = "Tam";
         int index = lista.getSelectedIndex();
         String rota = (String) listaRotas.elementAt(index);
-        String split[] = rota.split("-");
-        cont.salvarLista(split[0], split[1], companhia);
+        
+        String split[] = rota.split("/"); 
+        String colocar = split[0] + "/" +split[1] + " (" +companhia + ")";
+        listaTrechos.addElement(colocar);
+        ControllerView.salvarLista(split[0], split[1], companhia);
+        escolhidos.setModel(listaTrechos);
+       
     }//GEN-LAST:event_buttonTamActionPerformed
 
     /**
@@ -399,9 +401,12 @@ public class Inicio extends javax.swing.JFrame {
         String companhia = "Gol";
         int index = lista.getSelectedIndex();
         String rota = (String) listaRotas.elementAt(index);
-        String split[] = rota.split(rota);
-        String split[] = rota.split("-");
-        cont.salvarLista(split[0], split[1], companhia);
+        String split[] = rota.split("/");
+        
+        String colocar = split[0] + "/" +split[1] + " (" +companhia + ")";
+        listaTrechos.addElement(colocar);
+        ControllerView.salvarLista(split[0], split[1], companhia);
+        escolhidos.setModel(listaTrechos);
     }//GEN-LAST:event_buttonGolActionPerformed
 
     /**
@@ -421,8 +426,11 @@ public class Inicio extends javax.swing.JFrame {
         String companhia = "Azul";
         int index = lista.getSelectedIndex();
         String rota = (String) listaRotas.elementAt(index);
-        String split[] = rota.split("-");
-        cont.salvarLista(split[0], split[1], companhia);
+        String split[] = rota.split("/"); 
+        String colocar = split[0] + "/" +split[1] + " (" +companhia + ")";
+        listaTrechos.addElement(colocar);
+        ControllerView.salvarLista(split[0], split[1], companhia);
+        escolhidos.setModel(listaTrechos);
     }//GEN-LAST:event_buttonAzulActionPerformed
 
     private void VoltarTelaInicialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VoltarTelaInicialActionPerformed
@@ -433,7 +441,7 @@ public class Inicio extends javax.swing.JFrame {
 
     ControllerView cont;//instância do controller da view
     DefaultListModel listaRotas = new DefaultListModel();
-
+    DefaultListModel listaTrechos = new DefaultListModel();
     /**
      * @param args the command line arguments
      */
@@ -484,6 +492,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JButton buttonVoltar;
     private javax.swing.JPanel confirmacao;
     private javax.swing.JPanel escolherRota;
+    private javax.swing.JList<Object> escolhidos;
     private javax.swing.JPanel inicio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -495,7 +504,6 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JLabel labelIndisponivel;
     private javax.swing.JLabel labelOrigem;
     private javax.swing.JList<Object> lista;
-    private javax.swing.JList<Object> lista1;
     private javax.swing.JLabel subTitulo;
     private javax.swing.JPanel telaUser;
     private javax.swing.JLabel titulo;
