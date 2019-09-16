@@ -300,7 +300,6 @@ public class Inicio extends javax.swing.JFrame {
      *
      */
     private void buttonConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonConfirmarActionPerformed
-        DefaultListModel listaRotas = new DefaultListModel();
         try {
             String origem = (String) boxOrigem.getSelectedItem();
             String destino = (String) boxDestino.getSelectedItem();
@@ -340,10 +339,11 @@ public class Inicio extends javax.swing.JFrame {
      *
      */
     private void buttonTamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTamActionPerformed
-        int index = lista.getSelectedIndex();
-
         String companhia = "Tam";
-        cont.salvarLista(origem, destino, companhia);
+        int index = lista.getSelectedIndex();
+        String rota = (String) listaRotas.elementAt(index);
+        String split[] = rota.split("-");
+        cont.salvarLista(split[0], split[1], companhia);
     }//GEN-LAST:event_buttonTamActionPerformed
 
     /**
@@ -353,17 +353,11 @@ public class Inicio extends javax.swing.JFrame {
     private void buttonGolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGolActionPerformed
 
         String companhia = "Gol";
-        cont.salvarLista(origem, destino, companhia);
+        int index = lista.getSelectedIndex();
+        String rota = (String) listaRotas.elementAt(index);
+        String split[] = rota.split("-");
+        cont.salvarLista(split[0], split[1], companhia);
     }//GEN-LAST:event_buttonGolActionPerformed
-
-    /**
-     * Método que envia o trecho e a companhia Azul.
-     *
-     */
-    private void buttonAzulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAzulActionPerformed
-
-        String companhia = "Azul";
-        cont.salvarLista(origem, destino, companhia);    }//GEN-LAST:event_buttonAzulActionPerformed
 
     /**
      * Após ter realizado a comprar poder retornar para a tela inicial.
@@ -374,8 +368,21 @@ public class Inicio extends javax.swing.JFrame {
         CardLayout c = (CardLayout) telaUser.getLayout();
         c.show(telaUser, "inicio");
     }//GEN-LAST:event_buttonVoltarActionPerformed
+    
+    /**
+     * Método que envia o trecho e a companhia Azul.
+     *
+     */
+    private void buttonAzulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAzulActionPerformed
+        String companhia = "Azul";
+        int index = lista.getSelectedIndex();
+        String rota = (String) listaRotas.elementAt(index);
+        String split[] = rota.split("-");
+        cont.salvarLista(split[0], split[1], companhia);
+    }//GEN-LAST:event_buttonAzulActionPerformed
 
     ControllerView cont;//instância do controller da view
+    DefaultListModel listaRotas = new DefaultListModel();
 
     /**
      * @param args the command line arguments
