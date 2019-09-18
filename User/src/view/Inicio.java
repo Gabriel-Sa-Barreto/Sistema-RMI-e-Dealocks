@@ -22,12 +22,12 @@ import javax.swing.DefaultListModel;
  * @author Samuel Vitorio Lima , Gabriel Sá e Daniel
  */
 public class Inicio extends javax.swing.JFrame {
-    
+
     /**
      * Atributo que realiza conexão com o servidor.
      */
     private Cliente cliente;
-    
+
     /**
      * Creates new form Inicio
      */
@@ -37,9 +37,9 @@ public class Inicio extends javax.swing.JFrame {
         List<String> trajeto = cont.lerRotas();
         new ControllerRotas();
         for (Iterator<String> iter = trajeto.iterator(); ((Iterator<String>) iter).hasNext();) {
-           String add = iter.next();
-           boxOrigem.addItem(add);
-           boxDestino.addItem(add);
+            String add = iter.next();
+            boxOrigem.addItem(add);
+            boxDestino.addItem(add);
         }
         cliente = new Cliente("10.0.0.102", 1885);
     }
@@ -59,9 +59,9 @@ public class Inicio extends javax.swing.JFrame {
         titulo = new javax.swing.JLabel();
         subTitulo = new javax.swing.JLabel();
         labelOrigem = new javax.swing.JLabel();
-        boxOrigem = new javax.swing.JComboBox<>();
+        boxOrigem = new javax.swing.JComboBox<Object>();
         labelDestino = new javax.swing.JLabel();
-        boxDestino = new javax.swing.JComboBox<>();
+        boxDestino = new javax.swing.JComboBox<Object>();
         buttonConfirmar = new javax.swing.JButton();
         escolherRota = new javax.swing.JPanel();
         titulo1 = new javax.swing.JLabel();
@@ -71,9 +71,9 @@ public class Inicio extends javax.swing.JFrame {
         buttonAzul = new javax.swing.JButton();
         labelIndisponivel = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        lista = new javax.swing.JList<>();
+        lista = new javax.swing.JList<Object>();
         jScrollPane3 = new javax.swing.JScrollPane();
-        escolhidos = new javax.swing.JList<>();
+        escolhidos = new javax.swing.JList<Object>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         VoltarTelaInicial = new javax.swing.JButton();
@@ -192,7 +192,6 @@ public class Inicio extends javax.swing.JFrame {
 
         labelIndisponivel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         labelIndisponivel.setText("Roteiro Indiponível");
-        labelIndisponivel.setEnabled(false);
 
         lista.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane2.setViewportView(lista);
@@ -328,36 +327,40 @@ public class Inicio extends javax.swing.JFrame {
      */
     private void buttonConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonConfirmarActionPerformed
         try {
-            
+            labelIndisponivel.setVisible(false);
             String origem = (String) boxOrigem.getSelectedItem();
             String destino = (String) boxDestino.getSelectedItem();
             String pacote = "1" + ";" + origem + ";" + destino;
             //enviar pacote de origem e destino para o servidor geral.
             cliente.conexao(); //se conecta ao servidor
-            cliente.executa(); 
-            ControllerRede.enviarDado(cliente.getCliente(),pacote);
-            while(true){ //espera pelo recebimento de todas as rotas.
+            cliente.executa();
+            ControllerRede.enviarDado(cliente.getCliente(), pacote);
+            while (true) { //espera pelo recebimento de todas as rotas.
                 boolean verificacao = ControllerRotas.isHasNewRoutes();
-                if(verificacao == false) break;
-            }          
+                if (verificacao == false) {
+                    break;
+                }
+            }
             //somente continua execução depois do recebimento de todas as rotas.            
             List<String> rotas = ControllerRotas.getRotas();
-            //listaRotas.clear();
+
             //pegar os trechos das rotas enviadas pelo servidor
             for (Iterator<String> iter = rotas.iterator(); ((Iterator<String>) iter).hasNext();) {
                 String rota = iter.next(); //pega uma rota
                 String split[] = rota.split("-"); //realiza o split pelo -
-                for(int j = 0 ; j < split.length; j++){
+                for (int j = 0; j < split.length; j++) {
                     //pegar o trajeto saida/chegada
-                    if(j != (split.length -1)){
-                        String trajeto = "Saida: " + split[j] + "/Chegada: " + split[j+1];
-                        if(!listaRotas.contains(trajeto)) //verifica se já contem na lista, senão adiciona
+                    if (j != (split.length - 1)) {
+                        String trajeto = "Saida: " + split[j] + "/Chegada: " + split[j + 1];
+                        if (!listaRotas.contains(trajeto)) //verifica se já contem na lista, senão adiciona
+                        {
                             listaRotas.addElement(trajeto); //evita repetição de trecho
+                        }
                     }
                 }
             }
             lista.setModel(listaRotas);
-       
+
         } catch (IOException ex) {
             System.out.println("Erro: de conexão com o servidor");
         }
@@ -372,7 +375,7 @@ public class Inicio extends javax.swing.JFrame {
      *
      */
     private void buttonComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonComprarActionPerformed
-        
+
     }//GEN-LAST:event_buttonComprarActionPerformed
 
     /**
@@ -383,13 +386,12 @@ public class Inicio extends javax.swing.JFrame {
         String companhia = "Tam";
         int index = lista.getSelectedIndex();
         String rota = (String) listaRotas.elementAt(index);
-        
-        String split[] = rota.split("/"); 
-        String colocar = split[0] + "/" +split[1] + " (" +companhia + ")";
+
+        String split[] = rota.split("/");
+        String colocar = split[0] + "/" + split[1] + " (" + companhia + ")";
         listaTrechos.addElement(colocar);
         ControllerView.salvarLista(split[0], split[1], companhia);
         escolhidos.setModel(listaTrechos);
-       
     }//GEN-LAST:event_buttonTamActionPerformed
 
     /**
@@ -397,13 +399,12 @@ public class Inicio extends javax.swing.JFrame {
      *
      */
     private void buttonGolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGolActionPerformed
-
         String companhia = "Gol";
         int index = lista.getSelectedIndex();
         String rota = (String) listaRotas.elementAt(index);
+       
         String split[] = rota.split("/");
-        
-        String colocar = split[0] + "/" +split[1] + " (" +companhia + ")";
+        String colocar = split[0] + "/" + split[1] + " (" + companhia + ")";
         listaTrechos.addElement(colocar);
         ControllerView.salvarLista(split[0], split[1], companhia);
         escolhidos.setModel(listaTrechos);
@@ -414,10 +415,15 @@ public class Inicio extends javax.swing.JFrame {
      *
      */
     private void buttonVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVoltarActionPerformed
+        ControllerRotas.clearListRotas();
+        listaRotas.clear();//limpando lista de rotas
+        lista.setModel(listaRotas);
+        listaTrechos.clear();//limpando lista de trechos escolhidos
+        escolhidos.setModel(listaTrechos);
         CardLayout c = (CardLayout) telaUser.getLayout();
         c.show(telaUser, "inicio");
     }//GEN-LAST:event_buttonVoltarActionPerformed
-    
+
     /**
      * Método que envia o trecho e a companhia Azul.
      *
@@ -426,22 +432,31 @@ public class Inicio extends javax.swing.JFrame {
         String companhia = "Azul";
         int index = lista.getSelectedIndex();
         String rota = (String) listaRotas.elementAt(index);
-        String split[] = rota.split("/"); 
-        String colocar = split[0] + "/" +split[1] + " (" +companhia + ")";
+        
+        String split[] = rota.split("/");
+        String colocar = split[0] + "/" + split[1] + " (" + companhia + ")";
         listaTrechos.addElement(colocar);
         ControllerView.salvarLista(split[0], split[1], companhia);
         escolhidos.setModel(listaTrechos);
     }//GEN-LAST:event_buttonAzulActionPerformed
 
+    /**
+     * Método para voltar pra tela anterior
+     */
     private void VoltarTelaInicialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VoltarTelaInicialActionPerformed
+        ControllerRotas.clearListRotas();
+        listaRotas.clear();//limpando lista de rotas
+        lista.setModel(listaRotas);
+        listaTrechos.clear();//limpando lista de trechos escolhidos
+        escolhidos.setModel(listaTrechos);
         CardLayout c = (CardLayout) telaUser.getLayout();
         c.show(telaUser, "inicio");
-        //ControllerRotas.clearListRotas();
     }//GEN-LAST:event_VoltarTelaInicialActionPerformed
 
     ControllerView cont;//instância do controller da view
     DefaultListModel listaRotas = new DefaultListModel();
     DefaultListModel listaTrechos = new DefaultListModel();
+
     /**
      * @param args the command line arguments
      */

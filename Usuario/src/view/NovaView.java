@@ -31,6 +31,7 @@ public class NovaView extends javax.swing.JFrame {
      */
     public NovaView() throws IOException {
         initComponents();
+        new ControllerView();
         List<String> trajeto = ControllerView.lerRotas();
         for (Iterator<String> iter = trajeto.iterator(); ((Iterator<String>) iter).hasNext();) {
            String add = iter.next();
