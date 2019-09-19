@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -41,7 +42,7 @@ public class Inicio extends javax.swing.JFrame {
             boxOrigem.addItem(add);
             boxDestino.addItem(add);
         }
-        cliente = new Cliente("192.168.25.9", 1885);
+        cliente = new Cliente("172.16.201.61", 1885);
     }
 
     /**
@@ -114,7 +115,7 @@ public class Inicio extends javax.swing.JFrame {
             .addGroup(inicioLayout.createSequentialGroup()
                 .addGap(83, 83, 83)
                 .addComponent(boxOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 171, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 239, Short.MAX_VALUE)
                 .addComponent(boxDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(102, 102, 102))
             .addGroup(inicioLayout.createSequentialGroup()
@@ -237,7 +238,7 @@ public class Inicio extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, escolherRotaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelIndisponivel, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
+                .addComponent(labelIndisponivel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(104, 104, 104)
                 .addComponent(VoltarTelaInicial)
                 .addGap(55, 55, 55))
@@ -272,7 +273,7 @@ public class Inicio extends javax.swing.JFrame {
         telaUser.add(escolherRota, "escolherRota");
 
         labelConfirmacao.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        labelConfirmacao.setText("Passagem Comprada");
+        labelConfirmacao.setText("Compra Realizada com Sucesso!!");
 
         buttonVoltar.setText("Comprar outra passagem");
         buttonVoltar.addActionListener(new java.awt.event.ActionListener() {
@@ -286,25 +287,27 @@ public class Inicio extends javax.swing.JFrame {
         confirmacaoLayout.setHorizontalGroup(
             confirmacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(confirmacaoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(buttonVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, confirmacaoLayout.createSequentialGroup()
-                .addContainerGap(202, Short.MAX_VALUE)
-                .addComponent(labelConfirmacao, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(186, 186, 186))
+                .addGroup(confirmacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(confirmacaoLayout.createSequentialGroup()
+                        .addGap(207, 207, 207)
+                        .addComponent(buttonVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(confirmacaoLayout.createSequentialGroup()
+                        .addGap(145, 145, 145)
+                        .addComponent(labelConfirmacao, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(188, Short.MAX_VALUE))
         );
         confirmacaoLayout.setVerticalGroup(
             confirmacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(confirmacaoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(buttonVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(77, 77, 77)
+                .addGap(102, 102, 102)
                 .addComponent(labelConfirmacao, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(160, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(156, Short.MAX_VALUE))
         );
 
-        telaUser.add(confirmacao, "confirmação");
+        telaUser.add(confirmacao, "confirmacao");
+        confirmacao.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -396,6 +399,28 @@ public class Inicio extends javax.swing.JFrame {
             }
             String pacote = "2" + ";" + "0" + ";" + "vazio" + ";" + "vazio" + ";" + "vazio" + ";";
             ControllerRede.enviarDado(cliente.getCliente(), pacote);
+            while (true) { //espera pelo recebimento de todos os trechos.
+                boolean verificacao = ControllerRotas.isHasNewTrechoFailed();
+                if (verificacao == false) {
+                    break;
+                }
+            }
+            if(ControllerRotas.getTrechosIndisponiveis().isEmpty()){
+                CardLayout c = (CardLayout) telaUser.getLayout();
+                c.show(telaUser, "confirmacao");
+                return;
+            }else{
+                String mensagem = "Trechos indisponiveis: \n";
+                List<String> falhos = ControllerRotas.getTrechosIndisponiveis();
+                for (Iterator<String> iter = falhos.iterator(); ((Iterator<String>) iter).hasNext();){
+                    //saída;destino;empresa
+                    String trajeto = iter.next();
+                    String split[] = trajeto.split(";");
+                    mensagem = mensagem + split[0] + "->" + split[1] + "/" + split[2] + "\n";
+                }
+                JOptionPane.showMessageDialog(null, mensagem);
+                ControllerRotas.getTrechosIndisponiveis().clear();
+            }
         } catch (IOException ex) {
             Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
         }

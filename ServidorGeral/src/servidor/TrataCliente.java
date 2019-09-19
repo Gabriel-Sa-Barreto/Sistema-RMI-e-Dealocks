@@ -107,14 +107,14 @@ public class TrataCliente implements Runnable{
                                 //envia trechos indisponíveis
                                 for(int i = 0; i < verificacao.length; i++){
                                     if(verificacao[i] == 0){
-                                        resposta = "2" + ";" + "1" + listaDeTrechos.get(i);
+                                        resposta = "2" + ";" + "1" + ";" + listaDeTrechos.get(i);
                                         servidor.distribuiMensagem(resposta);
                                     }
                                 }
                                 //agora envia um pacote para informar que acabou a transmissão de trechos indisponíveis.
                                 //formato do pacote:
                                 //opcode;sinalDefinalizado;trechoIndisponível
-                                resposta = "2" + ";" + "0" + "Vazio";
+                                resposta = "2" + ";" + "0" + ";" + "Vazio";
                                 servidor.distribuiMensagem(resposta);
                                 listaDeTrechos.clear();
                             }

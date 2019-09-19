@@ -59,6 +59,7 @@ public class Recebedor implements Runnable{
                 pacote = entrada.readUTF();
                 String dados[] = pacote.split(";");
                 acao = ControllerPacote.strToInt(dados[0],0);
+                System.out.println(pacote);
                 switch(acao) {
                     case 1:
                         //recebimento das rotas calculadas pelo servidor.
