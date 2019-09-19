@@ -182,18 +182,18 @@ public class ControllerTrajeto {
                 case "Tam":
                     //variavel para quantidade de voos disponiveis no trajeto especifico
                     System.out.println("qa: " + servico1.consultarQuantidadeDePassagens(split[0], split[1]));
-                    servico1.mudarQuantidadeDePassagens(split[0], split[1], servico1.consultarQuantidadeDePassagens(split[0], split[1]));
+                    servico1.mudarQuantidadeDePassagens(split[0], split[1], servico1.consultarQuantidadeDePassagens(split[0], split[1]) - 1);
                     System.out.println("qd: " + servico1.consultarQuantidadeDePassagens(split[0], split[1]));
                     break;
                 case "Gol":
                     //variavel para quantidade de voos disponiveis no trajeto especifico
                     System.out.println(servico1.consultarQuantidadeDePassagens(split[0], split[1]));
-                    servico2.mudarQuantidadeDePassagens(split[0], split[1], servico2.consultarQuantidadeDePassagens(split[0], split[1]));
+                    servico2.mudarQuantidadeDePassagens(split[0], split[1], servico2.consultarQuantidadeDePassagens(split[0], split[1]) - 1);
                     break;
                 case "Azul":
                     //variavel para quantidade de voos disponiveis no trajeto especifico
                     System.out.println(servico1.consultarQuantidadeDePassagens(split[0], split[1]));
-                    servico3.mudarQuantidadeDePassagens(split[0], split[1], servico3.consultarQuantidadeDePassagens(split[0], split[1]));
+                    servico3.mudarQuantidadeDePassagens(split[0], split[1], servico3.consultarQuantidadeDePassagens(split[0], split[1]) - 1);
                     break;
             }
         }

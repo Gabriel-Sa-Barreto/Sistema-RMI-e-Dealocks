@@ -130,13 +130,14 @@ public class ServidorRMI extends UnicastRemoteObject implements Servico {
     public void atualizar() throws IOException{
         //objeto responsavel por escrever as linhas do arquivo
         String caminhoArquivo = "../Trajeto/trajeto.txt"; //diretorio onde esta o arquivo que armazena os trajetos
-        BufferedWriter write = new BufferedWriter(new FileWriter(caminhoArquivo,true));
+        BufferedWriter write = new BufferedWriter(new FileWriter(caminhoArquivo,false));
         //padrao definido para o armazenamento da informacao no arquivo
         write.write(trajetos.get(0).getCompanhia() + "/n");
         int i = 0;
         //sobrescrever todos os trajetos com a atualizacao
         while(i < trajetos.size()){
             write.write(trajetos.get(i).getOrigem() + "-" + trajetos.get(i).getDestino() + "-" + trajetos.get(i).getQuantidade() + "/n");
+            i++;
         }
         //fechar o buffer de escrita
         write.close();
