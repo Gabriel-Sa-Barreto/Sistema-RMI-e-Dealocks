@@ -6,6 +6,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Interface que define os métodos que um usuário poderá acessar da classe Grafo.
@@ -20,6 +21,12 @@ public interface GrafoInterface {
      */
     public void addVertice(String nome);
     
+    /**
+     * Método que verifica se já existe vertice
+     * @param nome 
+     * @return  
+     */
+    public int existeVertice(String nome);
     
     /**
      * Método que adiciona uma nova aresta entre dois vértices e
@@ -87,5 +94,16 @@ public interface GrafoInterface {
      * @param newPeso
      * @return 1 caso a operação tenha sido feita com sucesso e 0 caso tenha ocorrido alguma falha.
      */
-    public int setPesoAresta(String v1, String v2, int newPeso);    
+    public int setPesoAresta(String v1, String v2, int newPeso); 
+    
+    /**
+     * Método que procura por todos os caminhos possiveis a partir da origem para o destino
+     * @param origem  - String
+     * @param destino - String
+     * @return  uma lista de rotas, no qual cada posição da lista é uma string com uma rota encontrada.
+     */
+    public List<String> buscarCaminhos(String origem , String destino);
+    
+    
+    
 }

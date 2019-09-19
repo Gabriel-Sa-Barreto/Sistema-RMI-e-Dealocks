@@ -1,0 +1,40 @@
+﻿Gol
+Salvador-Recife-10
+Salvador-Aracaju-15
+Recife-Terezina-12
+Recife-Natal-14
+Fortaleza-Salvador-15
+Fortaleza-Terezina-20
+Terezina-São Luís-22
+Terezina-Natal-30
+Terezina-Goiânia-31
+Terezina-São Paulo-33
+São Luís-Salvador-34
+Aracaju-Fortaleza-23
+Aracaju-São Luís-24
+Natal-Fortaleza-25
+Goiânia-Porto Velho-22
+Goiânia-Rio Branco-22
+Manaus-Goiânia-34
+Manaus-Rio Branco-12
+Porto Velho-Manaus-15
+Porto Velho-Campo Grande-13
+Palmas-Manaus-2
+Rio Branco-Belem-5
+Campo Grande-Palmas-3
+Campo Grande-Porto Alegre-4
+Campo Grande-São Luís-1
+Belém-Goiânia-2
+Belém-Manaus-7
+Porto Alegre-Vitoria-4
+Porto Alegre-Florianopolis-2
+Curitiba-São Paulo-8
+Curitiba-Natal-9
+São Paulo-Porto Alegre-0
+São Paulo-Florianopolis-12
+Rio Janeiro-Curitiba-4
+Florianopolis-Vitoria-1
+Belo Horizonte-Porto Alegre-2
+Belo Horizonte-Rio Janeiro-2
+Belo Horizonte-Palmas-3
+Vitoria-Belo Horizonte-4

@@ -47,7 +47,7 @@ public class ServidorRMI extends UnicastRemoteObject implements Servico {
      */
     @Override
     public List<Rotas> lerRotas() throws RemoteException , IOException{
-        String caminhoArquivo = "../Trajeto/trajeto.txt"; //diretorio onde esta o arquivo que armazena os trajetos
+        String caminhoArquivo = "../Trajeto/trajeto2.txt"; //diretorio onde esta o arquivo que armazena os trajetos
         //objeto responsavel por ler as linhas do arquivo
         BufferedReader read = new BufferedReader(new FileReader(caminhoArquivo)); 
         String linha = "";
@@ -63,8 +63,8 @@ public class ServidorRMI extends UnicastRemoteObject implements Servico {
             //adiciona na lista
             trajetos.add(rota);
         }
-        //retorna a lista
         read.close();
+        //retorna a lista
         return trajetos;
     }
     
@@ -129,15 +129,14 @@ public class ServidorRMI extends UnicastRemoteObject implements Servico {
      */
     public void atualizar() throws IOException{
         //objeto responsavel por escrever as linhas do arquivo
-        String caminhoArquivo = "../Trajeto/trajeto.txt"; //diretorio onde esta o arquivo que armazena os trajetos
-        BufferedWriter write = new BufferedWriter(new FileWriter(caminhoArquivo,false));
+        String caminhoArquivo = "../Trajeto/trajeto2.txt"; //diretorio onde esta o arquivo que armazena os trajetos
+        BufferedWriter write = new BufferedWriter(new FileWriter(caminhoArquivo,true));
         //padrao definido para o armazenamento da informacao no arquivo
-        write.write(trajetos.get(0).getCompanhia() + "\n");
+        write.write(trajetos.get(0).getCompanhia() + "/n");
         int i = 0;
         //sobrescrever todos os trajetos com a atualizacao
         while(i < trajetos.size()){
-            write.write(trajetos.get(i).getOrigem() + "-" + trajetos.get(i).getDestino() + "-" + trajetos.get(i).getQuantidade() + "\n");
-            i++;
+            write.write(trajetos.get(i).getOrigem() + "-" + trajetos.get(i).getDestino() + "-" + trajetos.get(i).getQuantidade() + "/n");
         }
         //fechar o buffer de escrita
         write.close();
@@ -154,8 +153,8 @@ public class ServidorRMI extends UnicastRemoteObject implements Servico {
             LocateRegistry.createRegistry(1099);
             //string que deve conter o endereco onde o serviço está sendo
             //disponibilizado e o nome do serviço
-            String localizacao = "//172.16.201.61/1099";
-            //System.setProperty("java.rmi.server.hostname", "10.0.0.123");
+            String localizacao = "//192.168.25.9/1099";//mudar ip
+            //Servico servico = (Servico) UnicastRemoteObject.exportObject(servidor, 0);
             //System.out.println("Teste2");
             //Registra nosso servidor e o serviço que está sendo disponibilizado.
             //Caso seja feita alguma modificação ele já remove a antiga instância,

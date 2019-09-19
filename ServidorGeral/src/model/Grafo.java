@@ -6,10 +6,12 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Classe que implementa uma estrutura de dados chamada grafos.
- * @author gabriel
+ * @author Samuel Vitorio Lima , Gabriel Sá e Daniel
  */
 public class Grafo implements GrafoInterface {
       
@@ -163,6 +165,78 @@ public class Grafo implements GrafoInterface {
         }     
         return null;
     }
+
+    @Override
+    public int existeVertice(String nome) {
+        for(int i = 0; i < listVertices.size(); i++){
+            Celula c = listVertices.get(i);
+            if(c.getNome().equals(nome)){
+                return c.getVertice();
+            }
+        }
+        return -1;
+    }
+
+    @Override
+    public List<String> buscarCaminhos(String origem, String destino) {
+        boolean[] visitou = new boolean[numVertices()];
+        int[] path = new int[numVertices()];
+        int path_index = 0;
+        List<String> rotasEncontradas = new ArrayList<String>();
+        for(int i = 0; i < numVertices(); i++)
+            visitou[i] = false;
+        
+        auxBuscaCaminho(origem, destino, visitou, path, path_index, rotasEncontradas);
+        return rotasEncontradas;
+    }
+    
+    private void auxBuscaCaminho(String origem , String destino , boolean[] visitou, int[] path , int path_index, List<String> rotasEncontradas){
+        int index_origem = existeVertice(origem); //indice da origem do trajeto
+        int index_destino = existeVertice(destino); //indice do destino do trajeto
+        //System.out.println(index_destino + destino);
+        String rota = "";
+        visitou[index_origem] = true; // coloca que visitou onde esta saindo
+        path[path_index] = index_origem; //coloca no vetor que guarda o caminho
+        path_index++;   //incrementa para poder adicionar no vetor de caminho
+        
+        //condicao de parada
+        if(index_origem == index_destino){
+            //mostra o caminho pego pelo algoritmo
+            for(int i = 0; i < path_index; i++){
+                //System.out.println("c:" + listVertices.get(path[i]).getNome());
+                //armazena a rota encontrada.
+                if(i == (path_index-1) ){
+                    rota = rota + listVertices.get(path[i]).getNome();
+                }else{
+                    rota = rota + listVertices.get(path[i]).getNome() + "-";
+                }
+                System.out.println(rota);
+            }
+            rotasEncontradas.add(rota);
+        }
+        else{
+            try{
+                //pega todos os vizinhos da origem
+                ArrayList<Aresta> vizinhos = listAdjacencia(origem);
+                if(!vizinhos.isEmpty()){
+                    //percorre todo os vizinhos recursivamente todos os vizinhos
+                    for(Iterator<Aresta> iter= vizinhos.iterator();((Iterator<Aresta>) iter).hasNext();){
+                        Aresta adjacente = (Aresta) iter.next();
+                        int next = adjacente.getVert().getVertice(); //pega o indice do vertice
+                        if(!visitou[next]){
+                            //chama o metodo recursivamente
+                            auxBuscaCaminho(adjacente.getVert().getNome(), destino , visitou , path, path_index, rotasEncontradas);
+                        }    
+                    }
+                } 
+            }catch(Exception e){
+                System.out.println(e);
+            }   
+        }
+        
+        path_index--;
+        visitou[index_origem] = false; 
+    }
     
     /**
      * Classe que descreve um vértice (célula) pertencente ao grafo.
@@ -227,14 +301,7 @@ public class Grafo implements GrafoInterface {
         public void addArestas(Aresta v){
             this.arestas.add(v);
         }
-         
-        /**
-         * Método usado para verificar se um vértice qualquer é adjacente a um outro vértice
-         * ao se percorrer a lista de adjacência do mesmo.
-         * @param obj
-         * @return 
-         */
-        
+                 
     }
 
     /**
