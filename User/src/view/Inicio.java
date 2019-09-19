@@ -41,7 +41,7 @@ public class Inicio extends javax.swing.JFrame {
             boxOrigem.addItem(add);
             boxDestino.addItem(add);
         }
-        cliente = new Cliente("10.0.0.102", 1885);
+        cliente = new Cliente("192.168.25.9", 1885);
     }
 
     /**
@@ -375,7 +375,30 @@ public class Inicio extends javax.swing.JFrame {
      *
      */
     private void buttonComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonComprarActionPerformed
-
+        try {
+            //se conecta ao servidor
+            cliente.conexao();
+            cliente.executa();
+            //pegar os trechos das rotas enviadas pelo servidor
+            int laco = 0; //variavel para controlar o laco
+            while(laco <= listaTrechos.size() -1){
+                String informacao = (String) listaTrechos.get(laco); //pega os trajetos escolhidos
+                String split1[] = informacao.split("/"); //separa a string pelo caracter "/"
+                String split2[] = split1[0].trim().split(":"); //pegar a saida do trecho
+                String saida = split2[1].substring(1); //variavel que guarda o inicio do trajeto
+                String split3[] = split1[1].trim().split(":"); // pegar a parte da string chegada e companhia
+                String split4[] = split3[1].replace("(",";").replace(")", ";").split(";"); // separar companhia e chegada
+                String destino = split4[0].substring(1, split4[0].length()-1);
+                //opcode;valorDeFinalizado;saída;destino;empresa
+                String pacote = "2" + ";" + "1" + ";" + saida + ";" + destino + ";" + split4[1];
+                ControllerRede.enviarDado(cliente.getCliente(), pacote);
+                laco++;
+            }
+            String pacote = "2" + ";" + "0" + ";" + "vazio" + ";" + "vazio" + ";" + "vazio" + ";";
+            ControllerRede.enviarDado(cliente.getCliente(), pacote);
+        } catch (IOException ex) {
+            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_buttonComprarActionPerformed
 
     /**

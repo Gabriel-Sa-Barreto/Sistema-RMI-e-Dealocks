@@ -50,7 +50,7 @@ public class ControllerTrajeto {
             //string que deve conter o endereco onde o serviço está sendo
             //disponibilizado e o nome do serviço
             //servico da companhia1
-            servico1 = (Servico) Naming.lookup("//10.0.0.102/1099");
+            servico1 = (Servico) Naming.lookup("//192.168.25.9/1099");
         } catch(Exception ex){
             System.out.println("Erro com algum serviço 1" + ex.getMessage());
         }
@@ -58,7 +58,7 @@ public class ControllerTrajeto {
         try{
             //string que deve conter o endereco onde o serviço está sendo
             //disponibilizado e o nome do serviço
-            servico2 = (Servico) Naming.lookup("//10.0.0.102/1099");
+            servico2 = (Servico) Naming.lookup("//192.168.25.9/1099");
         } catch(Exception ex){
             System.out.println("Erro com algum serviço 2" + ex.getMessage());
         }
@@ -66,7 +66,7 @@ public class ControllerTrajeto {
         try{
             //string que deve conter o endereco onde o serviço está sendo
             //disponibilizado e o nome do serviço
-            servico3 = (Servico) Naming.lookup("//10.0.0.102/1099");
+            servico3 = (Servico) Naming.lookup("//192.168.25.9/1099");
         } catch(Exception ex){
             System.out.println("Erro com algum serviço 3" + ex.getMessage());
         }     
@@ -121,10 +121,14 @@ public class ControllerTrajeto {
             switch(split[2]){
                 case "Tam":
                     //variavel para quantidade de voos disponiveis
+                    System.out.println(split[0]);
+                    System.out.println(split[1]);
                     quantVoo = servico1.consultarQuantidadeDePassagens(split[0], split[1]);
+                    System.out.println(quantVoo);
                     //verificar se pode comprar
-                    if(quantVoo > 0)
-                        podeUsar[i] = 1;
+                    if(quantVoo > 0){
+                       podeUsar[i] = 1;
+                    }
                     break;
                 case "Gol":
                     //variavel para quantidade de voos disponiveis
@@ -151,8 +155,15 @@ public class ControllerTrajeto {
                 confirmado++;
         }
         //caso todos estão disponiveis
-        if(confirmado == trajeto.size())
+        System.out.println(confirmado);
+        System.out.println(trajeto.size());
+        if(confirmado == trajeto.size()){
+            System.out.println("Teste");
+            //atualiza as quantidades de passagens por vaga
+            atualizarQuantidade(trajeto);
             return null;
+        }
+        System.out.println("Nao");
         return podeUsar; //caso nao tenha vagas em alguns trajetos
     }
     
@@ -161,7 +172,7 @@ public class ControllerTrajeto {
      * @param trajeto
      * @throws RemoteException 
      */
-    public static synchronized void atualizarQuantidade(List<String> trajeto) throws RemoteException{
+    private static synchronized void atualizarQuantidade(List<String> trajeto) throws RemoteException{
         //percorrer o trajeto
         for(Iterator<String> iter= trajeto.iterator();((Iterator<String>) iter).hasNext();){
             //split para pegar a informacao
@@ -170,14 +181,18 @@ public class ControllerTrajeto {
             switch(split[2]){
                 case "Tam":
                     //variavel para quantidade de voos disponiveis no trajeto especifico
+                    System.out.println("qa: " + servico1.consultarQuantidadeDePassagens(split[0], split[1]));
                     servico1.mudarQuantidadeDePassagens(split[0], split[1], servico1.consultarQuantidadeDePassagens(split[0], split[1]));
+                    System.out.println("qd: " + servico1.consultarQuantidadeDePassagens(split[0], split[1]));
                     break;
                 case "Gol":
                     //variavel para quantidade de voos disponiveis no trajeto especifico
+                    System.out.println(servico1.consultarQuantidadeDePassagens(split[0], split[1]));
                     servico2.mudarQuantidadeDePassagens(split[0], split[1], servico2.consultarQuantidadeDePassagens(split[0], split[1]));
                     break;
                 case "Azul":
                     //variavel para quantidade de voos disponiveis no trajeto especifico
+                    System.out.println(servico1.consultarQuantidadeDePassagens(split[0], split[1]));
                     servico3.mudarQuantidadeDePassagens(split[0], split[1], servico3.consultarQuantidadeDePassagens(split[0], split[1]));
                     break;
             }

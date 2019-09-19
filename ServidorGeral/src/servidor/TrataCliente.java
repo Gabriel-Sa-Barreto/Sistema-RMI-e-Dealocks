@@ -10,6 +10,7 @@ import controller.ControllerTrajeto;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class TrataCliente implements Runnable{
     /**
      * Atributo que armazena o conjunto dos trechos de uma rota escolhida por um usuário.
      */
-    private List<String> listaDeTrechos;
+    private List<String> listaDeTrechos = new ArrayList<>();
     
     /**
      * Construtor que inicializa todos os atributos da classe.
@@ -61,6 +62,7 @@ public class TrataCliente implements Runnable{
         while(loop){
             try {
                 acao = entrada.readUTF(); //pacote de dados do usuário.
+                System.out.println(acao);
                 String dados[] = acao.split(";");
                 opcode = ControllerPacotes.strToInt(dados[0],0); //conversão para inteiro do campo de OpCode. 
                 switch(opcode){
@@ -98,7 +100,6 @@ public class TrataCliente implements Runnable{
                             if(verificacao == null){
                                 //todos os trechos estão disponíveis.
                                 //seta confirmação da vaga do cliente.
-                                ControllerTrajeto.atualizarQuantidade(listaDeTrechos);
                                 resposta = "2" + ";" + "Compra-Realizada";
                                  //agora envia confirmação de pedido feito.
                                 servidor.distribuiMensagem(resposta);
@@ -116,11 +117,13 @@ public class TrataCliente implements Runnable{
                                 resposta = "2" + ";" + "0" + "Vazio";
                                 servidor.distribuiMensagem(resposta);
                                 listaDeTrechos.clear();
-                            }                           
+                            }
+                            System.out.println("Terminou");
                         }else if(terminado == 1){
                             //caso não tenha acabado, armazena o trecho recebido 
                             //e espera pelo próximo.
                             String trecho = dados[2] + ";" + dados[3] + ";" + dados[4];
+                            System.out.println(trecho);
                             listaDeTrechos.add(trecho);
                         } 
                         break;
