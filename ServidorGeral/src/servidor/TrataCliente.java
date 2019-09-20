@@ -62,7 +62,6 @@ public class TrataCliente implements Runnable{
         while(loop){
             try {
                 acao = entrada.readUTF(); //pacote de dados do usuário.
-                System.out.println(acao);
                 String dados[] = acao.split(";");
                 opcode = ControllerPacotes.strToInt(dados[0],0); //conversão para inteiro do campo de OpCode. 
                 switch(opcode){
@@ -84,7 +83,6 @@ public class TrataCliente implements Runnable{
                         //envia pacote de encerramento
                         pacote = "1" + ";" + "vazio" + ";" + "0";
                         servidor.distribuiMensagem(pacote);
-                         System.out.println(pacote);
                         break;
                     case 2: 
                         //Recebimento do trajeto escolhido pelo cliente.
@@ -106,9 +104,13 @@ public class TrataCliente implements Runnable{
                             }else{
                                 //envia trechos indisponíveis
                                 for(int i = 0; i < verificacao.length; i++){
-                                    if(verificacao[i] == 0){
-                                        resposta = "2" + ";" + "1" + ";" + listaDeTrechos.get(i);
+                                    //verifica trechos indisponiveis por falta de vaga ou por serviço indisponível
+                                    if(verificacao[i] == 0){ //falta de vaga
+                                        resposta = "2" + ";" + "1" + ";" + listaDeTrechos.get(i) + ";" + "0";
                                         servidor.distribuiMensagem(resposta);
+                                    }else if(verificacao[i] == 2){ //falta de serviço
+                                        resposta = "2" + ";" + "1" + ";" + listaDeTrechos.get(i) + ";" + "1";
+                                        servidor.distribuiMensagem(resposta);  
                                     }
                                 }
                                 //agora envia um pacote para informar que acabou a transmissão de trechos indisponíveis.
@@ -123,12 +125,34 @@ public class TrataCliente implements Runnable{
                             //caso não tenha acabado, armazena o trecho recebido 
                             //e espera pelo próximo.
                             String trecho = dados[2] + ";" + dados[3] + ";" + dados[4];
-                            System.out.println(trecho);
                             listaDeTrechos.add(trecho);
                         } 
                         break;
                     case 3: //pacote para encerrar conexão com cliente.
                         loop = false;
+                        break;
+                    case 4:
+                        ControllerTrajeto.startServico();
+                        List<String> pacotesServicosIndisponiveis = new ArrayList<>();
+                        if(ControllerTrajeto.getServico1() == null){
+                            pacotesServicosIndisponiveis.add("4;Tam");
+                        }
+                        if(ControllerTrajeto.getServico2() == null){
+                            pacotesServicosIndisponiveis.add("4;Gol");
+                        }
+                        if(ControllerTrajeto.getServico3() == null){
+                            pacotesServicosIndisponiveis.add("4;Azul");
+                        }
+                        if(pacotesServicosIndisponiveis.isEmpty())
+                            servidor.distribuiMensagem("4;Vazio");
+                        else{
+                            int i = 0;
+                            while(i < pacotesServicosIndisponiveis.size()){
+                                servidor.distribuiMensagem(pacotesServicosIndisponiveis.get(i));
+                                i++;
+                            }
+                            servidor.distribuiMensagem("4;Vazio");
+                        }
                         break;
                     default:
                 }

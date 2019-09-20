@@ -7,13 +7,13 @@ Fortaleza-Salvador-1
 Fortaleza-Terezina-0
 Terezina-São Luís-2
 Terezina-Natal-3
-Terezina-Goiânia-1
-Terezina-São Paulo-3
+Terezina-Goiânia-0
+Terezina-São Paulo-2
 São Luís-Salvador-4
 Aracaju-Fortaleza-1
 Aracaju-São Luís-1
 Natal-Fortaleza-2
-Goiânia-Porto Velho-2
+Goiânia-Porto Velho-1
 Goiânia-Rio Branco-2
 Manaus-Goiânia-3
 Manaus-Rio Branco-2
@@ -22,11 +22,11 @@ Porto Velho-Campo Grande-3
 Palmas-Manaus-2
 Rio Branco-Belem-5
 Campo Grande-Palmas-3
-Campo Grande-Porto Alegre-4
+Campo Grande-Porto Alegre-3
 Campo Grande-São Luís-1
 Belém-Goiânia-2
 Belém-Manaus-7
-Porto Alegre-Vitoria-4
+Porto Alegre-Vitoria-3
 Porto Alegre-Florianopolis-2
 Curitiba-São Paulo-8
 Curitiba-Natal-9
@@ -36,8 +36,8 @@ Rio Janeiro-Curitiba-4
 Florianopolis-Vitoria-0
 Belo Horizonte-Porto Alegre-2
 Belo Horizonte-Rio Janeiro-2
-Belo Horizonte-Palmas-3
-Vitoria-Belo Horizonte-3
+Belo Horizonte-Palmas-2
+Vitoria-Belo Horizonte-2
 Salvador-Recife-0
 Salvador-Aracaju-0
 Recife-Terezina-0
@@ -46,13 +46,13 @@ Fortaleza-Salvador-1
 Fortaleza-Terezina-0
 Terezina-São Luís-2
 Terezina-Natal-3
-Terezina-Goiânia-1
-Terezina-São Paulo-3
+Terezina-Goiânia-0
+Terezina-São Paulo-2
 São Luís-Salvador-4
 Aracaju-Fortaleza-1
 Aracaju-São Luís-1
 Natal-Fortaleza-2
-Goiânia-Porto Velho-2
+Goiânia-Porto Velho-1
 Goiânia-Rio Branco-2
 Manaus-Goiânia-3
 Manaus-Rio Branco-2
@@ -61,11 +61,11 @@ Porto Velho-Campo Grande-3
 Palmas-Manaus-2
 Rio Branco-Belem-5
 Campo Grande-Palmas-3
-Campo Grande-Porto Alegre-4
+Campo Grande-Porto Alegre-3
 Campo Grande-São Luís-1
 Belém-Goiânia-2
 Belém-Manaus-7
-Porto Alegre-Vitoria-4
+Porto Alegre-Vitoria-3
 Porto Alegre-Florianopolis-2
 Curitiba-São Paulo-8
 Curitiba-Natal-9
@@ -75,8 +75,8 @@ Rio Janeiro-Curitiba-4
 Florianopolis-Vitoria-0
 Belo Horizonte-Porto Alegre-2
 Belo Horizonte-Rio Janeiro-2
-Belo Horizonte-Palmas-3
-Vitoria-Belo Horizonte-3
+Belo Horizonte-Palmas-2
+Vitoria-Belo Horizonte-2
 Salvador-Recife-0
 Salvador-Aracaju-0
 Recife-Terezina-0
@@ -85,13 +85,13 @@ Fortaleza-Salvador-1
 Fortaleza-Terezina-0
 Terezina-São Luís-2
 Terezina-Natal-3
-Terezina-Goiânia-1
-Terezina-São Paulo-3
+Terezina-Goiânia-0
+Terezina-São Paulo-2
 São Luís-Salvador-4
 Aracaju-Fortaleza-1
 Aracaju-São Luís-1
 Natal-Fortaleza-2
-Goiânia-Porto Velho-2
+Goiânia-Porto Velho-1
 Goiânia-Rio Branco-2
 Manaus-Goiânia-3
 Manaus-Rio Branco-2
@@ -100,11 +100,11 @@ Porto Velho-Campo Grande-3
 Palmas-Manaus-2
 Rio Branco-Belem-5
 Campo Grande-Palmas-3
-Campo Grande-Porto Alegre-4
+Campo Grande-Porto Alegre-3
 Campo Grande-São Luís-1
 Belém-Goiânia-2
 Belém-Manaus-7
-Porto Alegre-Vitoria-4
+Porto Alegre-Vitoria-3
 Porto Alegre-Florianopolis-2
 Curitiba-São Paulo-8
 Curitiba-Natal-9
@@ -114,8 +114,8 @@ Rio Janeiro-Curitiba-4
 Florianopolis-Vitoria-0
 Belo Horizonte-Porto Alegre-2
 Belo Horizonte-Rio Janeiro-2
-Belo Horizonte-Palmas-3
-Vitoria-Belo Horizonte-3
+Belo Horizonte-Palmas-2
+Vitoria-Belo Horizonte-2
 Salvador-Recife-0
 Salvador-Aracaju-0
 Recife-Terezina-0
@@ -124,13 +124,13 @@ Fortaleza-Salvador-1
 Fortaleza-Terezina-0
 Terezina-São Luís-2
 Terezina-Natal-3
-Terezina-Goiânia-1
-Terezina-São Paulo-3
+Terezina-Goiânia-0
+Terezina-São Paulo-2
 São Luís-Salvador-4
 Aracaju-Fortaleza-1
 Aracaju-São Luís-1
 Natal-Fortaleza-2
-Goiânia-Porto Velho-2
+Goiânia-Porto Velho-1
 Goiânia-Rio Branco-2
 Manaus-Goiânia-3
 Manaus-Rio Branco-2
@@ -139,11 +139,11 @@ Porto Velho-Campo Grande-3
 Palmas-Manaus-2
 Rio Branco-Belem-5
 Campo Grande-Palmas-3
-Campo Grande-Porto Alegre-4
+Campo Grande-Porto Alegre-3
 Campo Grande-São Luís-1
 Belém-Goiânia-2
 Belém-Manaus-7
-Porto Alegre-Vitoria-4
+Porto Alegre-Vitoria-3
 Porto Alegre-Florianopolis-2
 Curitiba-São Paulo-8
 Curitiba-Natal-9
@@ -153,5 +153,161 @@ Rio Janeiro-Curitiba-4
 Florianopolis-Vitoria-0
 Belo Horizonte-Porto Alegre-2
 Belo Horizonte-Rio Janeiro-2
-Belo Horizonte-Palmas-3
-Vitoria-Belo Horizonte-3
+Belo Horizonte-Palmas-2
+Vitoria-Belo Horizonte-2
+Salvador-Recife-0
+Salvador-Aracaju-0
+Recife-Terezina-0
+Recife-Natal-2
+Fortaleza-Salvador-1
+Fortaleza-Terezina-0
+Terezina-São Luís-2
+Terezina-Natal-3
+Terezina-Goiânia-0
+Terezina-São Paulo-2
+São Luís-Salvador-4
+Aracaju-Fortaleza-1
+Aracaju-São Luís-1
+Natal-Fortaleza-2
+Goiânia-Porto Velho-1
+Goiânia-Rio Branco-2
+Manaus-Goiânia-3
+Manaus-Rio Branco-2
+Porto Velho-Manaus-1
+Porto Velho-Campo Grande-3
+Palmas-Manaus-2
+Rio Branco-Belem-5
+Campo Grande-Palmas-3
+Campo Grande-Porto Alegre-3
+Campo Grande-São Luís-1
+Belém-Goiânia-2
+Belém-Manaus-7
+Porto Alegre-Vitoria-3
+Porto Alegre-Florianopolis-2
+Curitiba-São Paulo-8
+Curitiba-Natal-9
+São Paulo-Porto Alegre-0
+São Paulo-Florianopolis-2
+Rio Janeiro-Curitiba-4
+Florianopolis-Vitoria-0
+Belo Horizonte-Porto Alegre-2
+Belo Horizonte-Rio Janeiro-2
+Belo Horizonte-Palmas-2
+Vitoria-Belo Horizonte-2
+Salvador-Recife-0
+Salvador-Aracaju-0
+Recife-Terezina-0
+Recife-Natal-2
+Fortaleza-Salvador-1
+Fortaleza-Terezina-0
+Terezina-São Luís-2
+Terezina-Natal-3
+Terezina-Goiânia-0
+Terezina-São Paulo-2
+São Luís-Salvador-4
+Aracaju-Fortaleza-1
+Aracaju-São Luís-1
+Natal-Fortaleza-2
+Goiânia-Porto Velho-1
+Goiânia-Rio Branco-2
+Manaus-Goiânia-3
+Manaus-Rio Branco-2
+Porto Velho-Manaus-1
+Porto Velho-Campo Grande-3
+Palmas-Manaus-2
+Rio Branco-Belem-5
+Campo Grande-Palmas-3
+Campo Grande-Porto Alegre-3
+Campo Grande-São Luís-1
+Belém-Goiânia-2
+Belém-Manaus-7
+Porto Alegre-Vitoria-3
+Porto Alegre-Florianopolis-2
+Curitiba-São Paulo-8
+Curitiba-Natal-9
+São Paulo-Porto Alegre-0
+São Paulo-Florianopolis-2
+Rio Janeiro-Curitiba-4
+Florianopolis-Vitoria-0
+Belo Horizonte-Porto Alegre-2
+Belo Horizonte-Rio Janeiro-2
+Belo Horizonte-Palmas-2
+Vitoria-Belo Horizonte-2
+Salvador-Recife-0
+Salvador-Aracaju-0
+Recife-Terezina-0
+Recife-Natal-2
+Fortaleza-Salvador-1
+Fortaleza-Terezina-0
+Terezina-São Luís-2
+Terezina-Natal-3
+Terezina-Goiânia-0
+Terezina-São Paulo-2
+São Luís-Salvador-4
+Aracaju-Fortaleza-1
+Aracaju-São Luís-1
+Natal-Fortaleza-2
+Goiânia-Porto Velho-1
+Goiânia-Rio Branco-2
+Manaus-Goiânia-3
+Manaus-Rio Branco-2
+Porto Velho-Manaus-1
+Porto Velho-Campo Grande-3
+Palmas-Manaus-2
+Rio Branco-Belem-5
+Campo Grande-Palmas-3
+Campo Grande-Porto Alegre-3
+Campo Grande-São Luís-1
+Belém-Goiânia-2
+Belém-Manaus-7
+Porto Alegre-Vitoria-3
+Porto Alegre-Florianopolis-2
+Curitiba-São Paulo-8
+Curitiba-Natal-9
+São Paulo-Porto Alegre-0
+São Paulo-Florianopolis-2
+Rio Janeiro-Curitiba-4
+Florianopolis-Vitoria-0
+Belo Horizonte-Porto Alegre-2
+Belo Horizonte-Rio Janeiro-2
+Belo Horizonte-Palmas-2
+Vitoria-Belo Horizonte-2
+Salvador-Recife-0
+Salvador-Aracaju-0
+Recife-Terezina-0
+Recife-Natal-2
+Fortaleza-Salvador-1
+Fortaleza-Terezina-0
+Terezina-São Luís-2
+Terezina-Natal-3
+Terezina-Goiânia-0
+Terezina-São Paulo-2
+São Luís-Salvador-4
+Aracaju-Fortaleza-1
+Aracaju-São Luís-1
+Natal-Fortaleza-2
+Goiânia-Porto Velho-1
+Goiânia-Rio Branco-2
+Manaus-Goiânia-3
+Manaus-Rio Branco-2
+Porto Velho-Manaus-1
+Porto Velho-Campo Grande-3
+Palmas-Manaus-2
+Rio Branco-Belem-5
+Campo Grande-Palmas-3
+Campo Grande-Porto Alegre-3
+Campo Grande-São Luís-1
+Belém-Goiânia-2
+Belém-Manaus-7
+Porto Alegre-Vitoria-3
+Porto Alegre-Florianopolis-2
+Curitiba-São Paulo-8
+Curitiba-Natal-9
+São Paulo-Porto Alegre-0
+São Paulo-Florianopolis-2
+Rio Janeiro-Curitiba-4
+Florianopolis-Vitoria-0
+Belo Horizonte-Porto Alegre-2
+Belo Horizonte-Rio Janeiro-2
+Belo Horizonte-Palmas-2
+Vitoria-Belo Horizonte-2

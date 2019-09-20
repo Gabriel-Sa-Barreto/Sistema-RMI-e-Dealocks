@@ -42,7 +42,27 @@ public class Inicio extends javax.swing.JFrame {
             boxOrigem.addItem(add);
             boxDestino.addItem(add);
         }
-        cliente = new Cliente("172.16.201.61", 1885);
+        cliente = new Cliente("172.16.201.60", 1885);
+        cliente.conexao();
+        cliente.executa();
+        ControllerRede.enviarDado(cliente.getCliente(), "4;verificar");
+        //espera pela confirmação dos serviços que estão disponíveis.
+        while (true) {
+            boolean verificacao = ControllerRotas.isHasServiceFailed();
+            System.out.println("Tes");
+            if (verificacao == false) {
+                break;
+            }
+        }
+        
+        if(!ControllerRotas.getServicoFailed().isEmpty()){
+            //pega o nome dos serviços que estão indisponíveis.
+            for (Iterator<String> iter = ControllerRotas.getServicoFailed().iterator(); ((Iterator<String>) iter).hasNext();) {
+                JOptionPane.showMessageDialog(null,"Serviço da empresa " + iter.next() + " pode estar indisponível!!");
+            }  
+            ControllerRotas.getServicoFailed().clear();
+            ControllerRotas.setHasNewTrechoFailed(true);
+        }    
     }
 
     /**
@@ -78,6 +98,7 @@ public class Inicio extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         VoltarTelaInicial = new javax.swing.JButton();
+        buttonCancelar = new javax.swing.JButton();
         confirmacao = new javax.swing.JPanel();
         labelConfirmacao = new javax.swing.JLabel();
         buttonVoltar = new javax.swing.JButton();
@@ -211,6 +232,14 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
 
+        buttonCancelar.setText("Cancelar");
+        buttonCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        buttonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCancelarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout escolherRotaLayout = new javax.swing.GroupLayout(escolherRota);
         escolherRota.setLayout(escolherRotaLayout);
         escolherRotaLayout.setHorizontalGroup(
@@ -225,17 +254,22 @@ public class Inicio extends javax.swing.JFrame {
                         .addGap(84, 84, 84)
                         .addComponent(jLabel1))
                     .addGroup(escolherRotaLayout.createSequentialGroup()
-                        .addComponent(buttonTam, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(buttonGol, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(buttonAzul, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(escolherRotaLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(escolherRotaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(escolherRotaLayout.createSequentialGroup()
+                                .addComponent(buttonTam, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(buttonGol, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(buttonAzul, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(buttonComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(escolherRotaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(escolherRotaLayout.createSequentialGroup()
+                                .addComponent(buttonComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(buttonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(16, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, escolherRotaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(labelIndisponivel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -257,13 +291,14 @@ public class Inicio extends javax.swing.JFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(escolherRotaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonTam)
-                    .addComponent(buttonGol)
-                    .addComponent(buttonAzul))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(escolherRotaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(escolherRotaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(buttonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buttonComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(buttonTam, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttonAzul, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttonGol, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addGroup(escolherRotaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelIndisponivel, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(VoltarTelaInicial))
@@ -340,6 +375,7 @@ public class Inicio extends javax.swing.JFrame {
             ControllerRede.enviarDado(cliente.getCliente(), pacote);
             while (true) { //espera pelo recebimento de todas as rotas.
                 boolean verificacao = ControllerRotas.isHasNewRoutes();
+                System.out.println(verificacao);
                 if (verificacao == false) {
                     break;
                 }
@@ -384,14 +420,14 @@ public class Inicio extends javax.swing.JFrame {
             cliente.executa();
             //pegar os trechos das rotas enviadas pelo servidor
             int laco = 0; //variavel para controlar o laco
-            while(laco <= listaTrechos.size() -1){
+            while (laco <= listaTrechos.size() - 1) {
                 String informacao = (String) listaTrechos.get(laco); //pega os trajetos escolhidos
                 String split1[] = informacao.split("/"); //separa a string pelo caracter "/"
                 String split2[] = split1[0].trim().split(":"); //pegar a saida do trecho
                 String saida = split2[1].substring(1); //variavel que guarda o inicio do trajeto
                 String split3[] = split1[1].trim().split(":"); // pegar a parte da string chegada e companhia
-                String split4[] = split3[1].replace("(",";").replace(")", ";").split(";"); // separar companhia e chegada
-                String destino = split4[0].substring(1, split4[0].length()-1);
+                String split4[] = split3[1].replace("(", ";").replace(")", ";").split(";"); // separar companhia e chegada
+                String destino = split4[0].substring(1, split4[0].length() - 1);
                 //opcode;valorDeFinalizado;saída;destino;empresa
                 String pacote = "2" + ";" + "1" + ";" + saida + ";" + destino + ";" + split4[1];
                 ControllerRede.enviarDado(cliente.getCliente(), pacote);
@@ -405,21 +441,27 @@ public class Inicio extends javax.swing.JFrame {
                     break;
                 }
             }
-            if(ControllerRotas.getTrechosIndisponiveis().isEmpty()){
+            if (ControllerRotas.getTrechosIndisponiveis().isEmpty()) {
                 CardLayout c = (CardLayout) telaUser.getLayout();
                 c.show(telaUser, "confirmacao");
                 return;
-            }else{
+            } else {
                 String mensagem = "Trechos indisponiveis: \n";
                 List<String> falhos = ControllerRotas.getTrechosIndisponiveis();
-                for (Iterator<String> iter = falhos.iterator(); ((Iterator<String>) iter).hasNext();){
-                    //saída;destino;empresa
+                for (Iterator<String> iter = falhos.iterator(); ((Iterator<String>) iter).hasNext();) {
+                    //saída;destino;empresa;tipoDeFalha
                     String trajeto = iter.next();
                     String split[] = trajeto.split(";");
-                    mensagem = mensagem + split[0] + "->" + split[1] + "/" + split[2] + "\n";
+                    mensagem = mensagem + split[0] + "->" + split[1] + "/" + split[2] + " Falha: ";
+                    if(split[3].equals("0")){
+                        mensagem = mensagem + "falta de vagas\n";
+                    }else if(split[3].equals("1")){
+                        mensagem = mensagem + "empresa indisponível\n";
+                    }
                 }
                 JOptionPane.showMessageDialog(null, mensagem);
                 ControllerRotas.getTrechosIndisponiveis().clear();
+                ControllerRotas.setHasNewTrechoFailed(true);
             }
         } catch (IOException ex) {
             Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
@@ -450,7 +492,7 @@ public class Inicio extends javax.swing.JFrame {
         String companhia = "Gol";
         int index = lista.getSelectedIndex();
         String rota = (String) listaRotas.elementAt(index);
-       
+
         String split[] = rota.split("/");
         String colocar = split[0] + "/" + split[1] + " (" + companhia + ")";
         listaTrechos.addElement(colocar);
@@ -480,7 +522,7 @@ public class Inicio extends javax.swing.JFrame {
         String companhia = "Azul";
         int index = lista.getSelectedIndex();
         String rota = (String) listaRotas.elementAt(index);
-        
+
         String split[] = rota.split("/");
         String colocar = split[0] + "/" + split[1] + " (" + companhia + ")";
         listaTrechos.addElement(colocar);
@@ -500,6 +542,18 @@ public class Inicio extends javax.swing.JFrame {
         CardLayout c = (CardLayout) telaUser.getLayout();
         c.show(telaUser, "inicio");
     }//GEN-LAST:event_VoltarTelaInicialActionPerformed
+
+    /**
+     * Metodo que retirar um trajeto escolhido pelo usuario
+     *
+     * @param evt
+     */
+    private void buttonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelarActionPerformed
+        // TODO add your handling code here:
+        int index = escolhidos.getSelectedIndex(); //pega o indice da tupla desejada
+        listaTrechos.remove(index); //retirar da lista
+        escolhidos.setModel(listaTrechos); //colocar na JList a lista atualizada
+    }//GEN-LAST:event_buttonCancelarActionPerformed
 
     ControllerView cont;//instância do controller da view
     DefaultListModel listaRotas = new DefaultListModel();
@@ -548,6 +602,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JComboBox<Object> boxDestino;
     private javax.swing.JComboBox<Object> boxOrigem;
     private javax.swing.JButton buttonAzul;
+    private javax.swing.JButton buttonCancelar;
     private javax.swing.JButton buttonComprar;
     private javax.swing.JButton buttonConfirmar;
     private javax.swing.JButton buttonGol;

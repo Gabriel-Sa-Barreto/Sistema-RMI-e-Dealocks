@@ -25,6 +25,17 @@ public class ControllerRotas {
      * rotas por parte do cliente.
      */
     private static int semaforoNewRoutes = 0;
+    
+    /**
+     * Atributo que implementa a técnica de semáforo para o acesso à lista de
+     * servicos que podem estar indisponiveis.
+     */
+    private static int semaforoServiceFailed = 0;
+    
+    /**
+     * Lista que armazena as possibilidades de servicos indisponiveis
+     */
+    private static List<String> servicosFalho;
 
     /**
      * Atributo que armazena a lista de trechos que estão indisponíveis.
@@ -40,6 +51,8 @@ public class ControllerRotas {
     public ControllerRotas() {
         rotas = new ArrayList<String>();
         trechosIndisponiveis = new ArrayList<String>();
+        servicosFalho = new ArrayList<String>();
+        
     }
 
     /**
@@ -59,6 +72,14 @@ public class ControllerRotas {
     public static void addTrechoFalho(String trecho) {
         trechosIndisponiveis.add(trecho);
     }
+    
+    /**
+     * Método que adiciona um possível servico indisponível.
+     * @param servico
+     */
+    public static void addServiceFailed(String servico) {
+        servicosFalho.add(servico);
+    }
 
     /**
      * Método que retorna a lista de rotas após enviado origem e destino.
@@ -70,6 +91,17 @@ public class ControllerRotas {
         return rotas;
     }
 
+    /**
+     * Método que retorna a lista de rotas após enviado origem e destino.
+     *
+     * @return List
+     */
+    public static List<String> getServicoFailed() {
+        //rotas.forEach(u -> System.out.println("Rota: " + u.toString()));
+        return servicosFalho;
+    }
+    
+    
     /**
      * Método que informa ao usuário se já foram recebidos todos os trechos
      * falhos enviadas pelo servidor após a verificação da compra.
@@ -95,6 +127,34 @@ public class ControllerRotas {
         }
         return true;
     }
+    
+    /**
+     * Método que informa à aplicação do usuário se já é possível acessar a
+     * lista de possíveis serviços (servidores indisponíveis). 
+     *
+     * @return
+     */
+    public static boolean isHasServiceFailed() {
+        if (semaforoServiceFailed == 1) {
+            return false;
+        }
+        return true;
+    }
+    
+    /**
+     * Método que configura se terão novas rotas sendo armazenadas na lista,
+     * através da técnica do semáforo.
+     *
+     * @param hasService
+     */
+    public static void setHasServiceFailed(boolean hasService) {
+        if (!hasService) { //caso seja falso, não terá mais novas rotas.
+            semaforoServiceFailed = 1; //libera o acessso
+            return;
+        }
+        semaforoServiceFailed = 0; //trava o acesso à lista de rotas.
+    }
+    
 
     /**
      * Método que configura se terão novas rotas sendo armazenadas na lista,

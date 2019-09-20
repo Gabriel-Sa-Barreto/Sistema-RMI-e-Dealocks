@@ -100,8 +100,8 @@ public class Recebedor implements Runnable{
                                 //mais trechos falhos serão enviados. 
                                 ControllerRotas.setHasNewTrechoFailed(true);
                                 //formato do dados:
-                                //saída;destino;empresa
-                                String trecho = dados[2] + ";" + dados[3] + ";" + dados[4];
+                                //saída;destino;empresa;tipoDeFalha
+                                String trecho = dados[2] + ";" + dados[3] + ";" + dados[4] + ";" + dados[5];
                                 ControllerRotas.addTrechoFalho(trecho);
                             }else if(finalizadoTrechos == 0){
                                //acabou a transmissão de trechos falhos.
@@ -111,6 +111,22 @@ public class Recebedor implements Runnable{
                                //encerra o loop da thread
                                start = false;
                             }
+                        }
+                        break;
+                    case 4:
+                        //recebimento de confirmação/erro do trajeto escolhido.
+                        if(dados[1].equals("Vazio")){
+                            ControllerRotas.setHasServiceFailed(false);
+                            //envia pacote para encerrar conexão com o servidor.
+                            ControllerRede.enviarDado(cliente, this.fechar);
+                            //encerra o loop da thread
+                            start = false;
+                        }else{
+                            //recebe servicos que estao indisponiveis.
+                            //formato do pacote:
+                            //opcode;servicoIndisponível;
+                            ControllerRotas.setHasServiceFailed(true);
+                            ControllerRotas.addServiceFailed(dados[1]);
                         }
                         break;
                     default:
