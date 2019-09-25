@@ -5,6 +5,7 @@
  */
 package servidorgeral;
 
+import controller.ControllerTrajeto;
 import java.io.IOException;
 import servidor.Servidor;
 
@@ -19,6 +20,6 @@ public class ServidorGeral {
      */
     public static void main(String[] args) throws IOException {
         //criacao do servidor que se comunicará com o cliente.
-        Servidor server = new Servidor(1885); 
+        Servidor server = new Servidor(1885);   
     }   
 }

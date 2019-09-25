@@ -52,6 +52,7 @@ public class ControllerTrajeto {
             //disponibilizado e o nome do serviço
             //servico da companhia1
             servico1 = (Servico) Naming.lookup("//172.16.201.60/1099");
+            servico1.lerRotas();
         } catch (Exception ex) {
             System.out.println("Erro com algum serviço 1" + ex.getMessage());
         }
@@ -59,7 +60,8 @@ public class ControllerTrajeto {
         try {
             //string que deve conter o endereco onde o serviço está sendo
             //disponibilizado e o nome do serviço
-            servico2 = (Servico) Naming.lookup("//172.16.201.61/1099");
+            servico2 = (Servico) Naming.lookup("//172.16.201.61/1091");
+            servico2.lerRotas();
         } catch (Exception ex) {
             System.out.println("Erro com algum serviço 2" + ex.getMessage());
         }
@@ -68,6 +70,7 @@ public class ControllerTrajeto {
             //string que deve conter o endereco onde o serviço está sendo
             //disponibilizado e o nome do serviço
             servico3 = (Servico) Naming.lookup("//172.16.201.62/1099");
+            servico3.lerRotas();
         } catch (Exception ex) {
             System.out.println("Erro com algum serviço 3" + ex.getMessage());
         }
@@ -113,7 +116,8 @@ public class ControllerTrajeto {
      * @param trajeto
      * @return
      */
-    public static synchronized int[] verificarTrajeto(List<String> trajeto) throws RemoteException {
+    public static synchronized int[] verificarTrajeto(List<String> trajeto) throws RemoteException, IOException {
+        //startServico();
         //vetor responsavel por verificaar se os trajetos escolhidos estão disponiveis
         int podeUsar[] = new int[trajeto.size()];
         //inicializar o vetor
@@ -121,7 +125,6 @@ public class ControllerTrajeto {
             podeUsar[i] = 0;
         }
         int i = 0;
-        int quantVoo;
         //verificar todos os trajetos
         for (Iterator<String> iter = trajeto.iterator(); ((Iterator<String>) iter).hasNext();) {
             //split para pegar a informacao
@@ -130,10 +133,11 @@ public class ControllerTrajeto {
             switch (split[2]) {
                 case "Tam":
                     try {
+                        int quantVoo1;
                         //variavel para quantidade de voos disponiveis
-                        quantVoo = servico1.consultarQuantidadeDePassagens(split[0], split[1]);
+                        quantVoo1 = servico1.consultarQuantidadeDePassagens(split[0], split[1]);
                         //verificar se pode comprar
-                        if (quantVoo > 0) {
+                        if (quantVoo1 > 0) {
                             podeUsar[i] = 1;
                         }
                     } catch (NullPointerException ex) {
@@ -144,9 +148,10 @@ public class ControllerTrajeto {
                 case "Gol":
                     try {
                         //variavel para quantidade de voos disponiveis
-                        quantVoo = servico2.consultarQuantidadeDePassagens(split[0], split[1]);
+                        int quantVoo2;
+                        quantVoo2 = servico2.consultarQuantidadeDePassagens(split[0], split[1]);
                         //verificar se pode comprar
-                        if (quantVoo > 0) {
+                        if (quantVoo2 > 0) {
                             podeUsar[i] = 1;
                         }
                     } catch (NullPointerException ex) {
@@ -156,10 +161,11 @@ public class ControllerTrajeto {
                     break;
                 case "Azul":
                     try {
+                        int quantVoo3;
                         //variavel para quantidade de voos disponiveis
-                        quantVoo = servico3.consultarQuantidadeDePassagens(split[0], split[1]);
+                        quantVoo3 = servico3.consultarQuantidadeDePassagens(split[0], split[1]);
                         //verificar se pode comprar
-                        if (quantVoo > 0) {
+                        if (quantVoo3 > 0) {
                             podeUsar[i] = 1;
                         }
                     } catch (NullPointerException ex) {
@@ -216,7 +222,7 @@ public class ControllerTrajeto {
             }
         }
     }
-
+    
     /**
      * Método que acessa o grafo de rotas e retorna todas as possibilidades de
      * rotas encontradas, apartir de uma origem e destino.

@@ -49,7 +49,7 @@ public class Inicio extends javax.swing.JFrame {
         //espera pela confirmação dos serviços que estão disponíveis.
         while (true) {
             boolean verificacao = ControllerRotas.isHasServiceFailed();
-            System.out.println("Tes");
+            System.out.println("Esperando Serviços!");
             if (verificacao == false) {
                 break;
             }
@@ -437,6 +437,7 @@ public class Inicio extends javax.swing.JFrame {
             ControllerRede.enviarDado(cliente.getCliente(), pacote);
             while (true) { //espera pelo recebimento de todos os trechos.
                 boolean verificacao = ControllerRotas.isHasNewTrechoFailed();
+                System.out.println("Esperando Confirmação!");
                 if (verificacao == false) {
                     break;
                 }

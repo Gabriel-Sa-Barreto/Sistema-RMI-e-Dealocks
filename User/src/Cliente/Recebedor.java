@@ -86,6 +86,7 @@ public class Recebedor implements Runnable{
                     case 2:
                         //recebimento de confirmação/erro do trajeto escolhido.
                         if(dados[1].equals("Compra-Realizada")){
+                            System.out.println("Entrou");
                             ControllerRotas.setHasNewTrechoFailed(false);
                             //envia pacote para encerrar conexão com o servidor.
                             ControllerRede.enviarDado(cliente, this.fechar);
